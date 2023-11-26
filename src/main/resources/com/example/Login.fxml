@@ -10,11 +10,11 @@
 <?import javafx.scene.layout.StackPane?>
 <?import javafx.scene.text.Font?>
 
-<StackPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="440.0" prefWidth="650.0" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1">
+<StackPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="440.0" prefWidth="650.0" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" >
    <children>
       <AnchorPane prefHeight="200.0" prefWidth="200.0">
          <children>
-            <AnchorPane prefHeight="440.0" prefWidth="325.0" styleClass="left-form" stylesheets="@../../../../lib/style/loginDesign.css">
+            <AnchorPane prefHeight="440.0" prefWidth="325.0" styleClass="left-form" stylesheets="@style/loginDesign.css">
                <children>
                   <FontAwesomeIcon fill="WHITE" glyphName="LEAF" layoutX="96.0" layoutY="210.0" size="10em" />
                   <Label layoutX="49.0" layoutY="248.0" text="Fower Shop Management System" textFill="WHITE">
@@ -24,7 +24,7 @@
                   </Label>
                </children>
             </AnchorPane>
-            <AnchorPane layoutX="325.0" prefHeight="440.0" prefWidth="325.0" styleClass="right-form" stylesheets="@../../../../lib/style/loginDesign.css">
+            <AnchorPane layoutX="325.0" prefHeight="440.0" prefWidth="325.0" styleClass="right-form" stylesheets="@style/loginDesign.css">
                <children>
                   <FontAwesomeIcon glyphName="USER" layoutX="139.0" layoutY="114.0" size="5em" />
                   <Label layoutX="113.0" layoutY="123.0" text="Sign In" textFill="#722327">
