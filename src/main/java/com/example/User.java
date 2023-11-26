@@ -5,7 +5,6 @@ public class User {
     private String username;
     private String password;
     
-// test
     public User() {
         super();
     }
