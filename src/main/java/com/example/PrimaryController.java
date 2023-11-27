@@ -30,8 +30,10 @@ public class PrimaryController implements Initializable{
         System.exit(0);
     }
     
+    
     public void login() {
-        System.out.println("Username: " + username.getText());
+
+        System.out.println("Username:" + username.getText());
         System.out.println("Password: " + password.getText());
     }
     @Override

@@ -1,11 +1,12 @@
-package com.example;
+package com.jsonserver;
 import java.io.File;
 import java.util.List;
 
+import com.example.User;
 import com.fasterxml.jackson.core.type.TypeReference;
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
-public class database {
+public class Database {
     public static void main(String[] args) {
         // working with json files
        try { 

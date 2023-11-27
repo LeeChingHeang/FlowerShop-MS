@@ -1,4 +1,7 @@
 package com.example;
+
+import com.fasterxml.jackson.annotation.JsonProperty;
+
 public class User {
 
     private int id;
@@ -9,11 +12,16 @@ public class User {
         super();
     }
     
-    public User(int id, String username, String password) {
+    public User(@JsonProperty("id") int id, @JsonProperty("username") String username, @JsonProperty("password") String password) {
         this.id = id;
         this.username = username;
         this.password=password;
     }
+    // public User(int id, String username, String password) {
+    //     this.id = id;
+    //     this.username = username;
+    //     this.password=password;
+    // }
 
     public int getId() {
         return this.id;
