@@ -196,6 +196,10 @@ public class DashboardController implements Initializable{
         // }
 
     // method
+    public void displayUsername() {
+        String user = getData.username;
+        username.setText(user.substring(0,1).toUpperCase() + user.substring(1));
+    }
     public void switchForm(ActionEvent event){
        
         // // or want to be more crazy but cool 😎
@@ -255,5 +259,6 @@ public class DashboardController implements Initializable{
     @Override
     public void initialize(URL arg0, ResourceBundle arg1) {
         // TODO Auto-generated method stub
+        displayUsername();
     };
 }

@@ -69,6 +69,8 @@ public class LoginController implements Initializable{
                 alert.setContentText("You are logged in");
                 alert.showAndWait();
                 
+                // get username form textfield which we need to call this.username
+                getData.username = this.username.getText();
                 // Hide the current window (login form)
                 // loginBtn.getScene().getWindow().hide();
                 
