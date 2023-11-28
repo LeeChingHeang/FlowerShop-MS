@@ -11,7 +11,7 @@ public class User {
     public User() {
         super();
     }
-    
+    //  using jackson to convert json data to java object
     public User(@JsonProperty("id") int id, @JsonProperty("username") String username, @JsonProperty("password") String password) {
         this.id = id;
         this.username = username;
