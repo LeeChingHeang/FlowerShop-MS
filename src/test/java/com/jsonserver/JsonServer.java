@@ -25,7 +25,9 @@ public class JsonServer {
 
         // Get the response code
         int responseCode =connection.getResponseCode();
-
+        if(responseCode != 200) {
+            throw new RuntimeException("HttpResponseCode: " + responseCode);
+        }
         // Read the response data
         try (BufferedReader reader = new BufferedReader(new InputStreamReader(connection.getInputStream()))) {
             String line;
