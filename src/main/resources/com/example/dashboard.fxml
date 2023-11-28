@@ -16,6 +16,9 @@
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.layout.BorderPane?>
 <?import javafx.scene.layout.StackPane?>
+<?import javafx.scene.paint.Color?>
+<?import javafx.scene.paint.LinearGradient?>
+<?import javafx.scene.paint.Stop?>
 <?import javafx.scene.shape.Line?>
 <?import javafx.scene.text.Font?>
 
@@ -65,10 +68,36 @@
                            </font>
                         </Label>
                         <Line endX="93.0" layoutX="100.0" layoutY="173.0" startX="-93.0" stroke="WHITE" />
-                        <Button fx:id="home_btn" layoutX="11.0" layoutY="198.0" mnemonicParsing="false" onAction="#switchForm" prefHeight="45.0" prefWidth="180.0" styleClass="nav-btn" stylesheets="@style/dashboardDesign.css" text="Home" textFill="WHITE">
+                        <Button fx:id="home_btn" layoutX="11.0" layoutY="198.0" mnemonicParsing="false" onAction="#switchForm" prefHeight="45.0" prefWidth="180.0" style="-fx-background-color: linear-gradient(to bottom right, #d3133d, #a4262f);" styleClass="nav-btn" stylesheets="@style/dashboardDesign.css" text="Home">
                            <graphic>
                               <FontAwesomeIcon fill="WHITE" glyphName="HOME" size="1.5em" />
                            </graphic>
+                           <textFill>
+                              <LinearGradient endX="0.8957345971563981" endY="1.0">
+                                 <stops>
+                                    <Stop>
+                                       <color>
+                                          <Color red="0.8274509906768799" green="0.07450980693101883" blue="0.239215686917305" />
+                                       </color>
+                                    </Stop>
+                                    <Stop offset="0.006711409395973154">
+                                       <color>
+                                          <Color red="0.8274509906768799" green="0.07450980693101883" blue="0.239215686917305" />
+                                       </color>
+                                    </Stop>
+                                    <Stop offset="0.9966442953020134">
+                                       <color>
+                                          <Color red="0.6431372761726379" green="0.14901961386203766" blue="0.18431372940540314" />
+                                       </color>
+                                    </Stop>
+                                    <Stop offset="1.0">
+                                       <color>
+                                          <Color red="0.6431372761726379" green="0.14901961386203766" blue="0.18431372940540314" />
+                                       </color>
+                                    </Stop>
+                                 </stops>
+                              </LinearGradient>
+                           </textFill>
                         </Button>
                         <Button fx:id="availableFlowers_btn" layoutX="11.0" layoutY="243.0" mnemonicParsing="false" onAction="#switchForm" prefHeight="45.0" prefWidth="180.0" styleClass="nav-btn" stylesheets="@style/dashboardDesign.css" text="Available Flowers" textFill="WHITE">
                            <graphic>

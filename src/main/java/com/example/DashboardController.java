@@ -146,14 +146,30 @@ public class DashboardController implements Initializable{
     @FXML
     private Label username;
    
-    // justSome Switch 🤓
-    private void justSwitch(AnchorPane form) {
-        home_form.setVisible(false);
-        availableFlowers_form.setVisible(false);
-        purchase_form.setVisible(false);
-        form.setVisible(true);
+    // justSome Switch 🤓 
+    private void justSwitch(AnchorPane clickForm) {
+        // since I name the button with the same name as the form (not include "_*")
+        String elementId = clickForm.getId();
+        String[] prefix = elementId.split("_");
+        
+        String btnIdToShow = prefix[0] + "_btn";
+        // make change to button that interact with the form
+        Button selectBtn = (Button) main_form.lookup("#" + btnIdToShow);
+        
+        for (Button btn : new Button[]{home_btn, availableFlowers_btn, purchase_btn}) {
+            btn.setStyle("-fx-background-color: transparent");
+        }
+
+        for(AnchorPane form: new AnchorPane[]{home_form, availableFlowers_form, purchase_form}){
+            form.setVisible(false);
+        }
+        selectBtn.setStyle("-fx-background-color: linear-gradient(to bottom right, #d3133d, #a4262f)");
+        clickForm.setVisible(true);
+
+
+        // showButtStyle(selectBtn);
     }    
-        // // 🤣 when you hate life
+        // // // 🤣 when you hate ur life
         // private void handleButtonClick(AnchorPane clickedForm) {
         //     // Hide all forms
         //     for (AnchorPane form : new AnchorPane[]{home_form, availableFlowers_form, purchase_form}) {
@@ -162,12 +178,21 @@ public class DashboardController implements Initializable{
     
         //     // Show the form associated with the clicked button
         //     showForm(clickedForm);
+
         // }
     
         // private void showForm(AnchorPane form) {
         //     if (form != null) {
         //         form.setVisible(true);
         //     }
+        // }
+        
+        // // change button style
+        // private void showButtStyle(Button clickedBtn) {
+        //     for (Button btn : new Button[]{home_btn, availableFlowers_btn, purchase_btn}) {
+        //         btn.setStyle("-fx-background-color: transparent");
+        //     }
+        //     clickedBtn.setStyle("-fx-background-color: linear-gradient(to bottom right, #d3133d, #a4262f)");
         // }
 
     // method
@@ -187,7 +212,7 @@ public class DashboardController implements Initializable{
         //     justSwitch(purchase_form);
         // }
         
-        // why else if when you can do this 😎
+        // why else-if when you can do these 😎
         home_btn.setOnAction(e -> justSwitch(home_form));
         availableFlowers_btn.setOnAction(e -> justSwitch(availableFlowers_form));
         purchase_btn.setOnAction(e -> justSwitch(purchase_form));
