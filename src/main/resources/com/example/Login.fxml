@@ -10,7 +10,7 @@
 <?import javafx.scene.layout.StackPane?>
 <?import javafx.scene.text.Font?>
 
-<StackPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="440.0" prefWidth="650.0" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.example.PrimaryController">
+<StackPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="440.0" prefWidth="650.0" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.example.LoginController">
    <children>
       <AnchorPane fx:id="main_form" prefHeight="200.0" prefWidth="200.0">
          <children>
@@ -38,8 +38,8 @@
                         <String fx:value="textfield" />
                      </styleClass></TextField>
                   <PasswordField fx:id="password" layoutX="53.0" layoutY="233.0" prefHeight="30.0" prefWidth="220.0" promptText="Password" styleClass="textfield" />
-                  <Button fx:id="loginBtn" layoutX="55.0" layoutY="290.0" mnemonicParsing="false" prefHeight="40.0" prefWidth="220.0" styleClass="login-btn" text="login" textAlignment="CENTER" />
-                  <Button fx:id="close" layoutX="273.0" layoutY="-1.0" mnemonicParsing="false" onAction="#close" styleClass="close" AnchorPane.rightAnchor="2.0" AnchorPane.topAnchor="2.0">
+                  <Button fx:id="loginBtn" layoutX="55.0" layoutY="290.0" mnemonicParsing="false" onAction="#login" prefHeight="40.0" prefWidth="220.0" styleClass="login-btn" text="login" textAlignment="CENTER" />
+                  <Button fx:id="close" layoutX="273.0" layoutY="-1.0" mnemonicParsing="false" onAction="#close" prefHeight="17.0" prefWidth="47.0" styleClass="close" AnchorPane.rightAnchor="2.0" AnchorPane.topAnchor="2.0">
                      <graphic>
                         <FontAwesomeIcon fill="#b22e2e" glyphName="CLOSE" selectionFill="#bf2441" size="1.2em" styleClass="close" text="" />
                      </graphic>
