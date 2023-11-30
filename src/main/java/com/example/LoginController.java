@@ -70,7 +70,7 @@ public class LoginController implements Initializable{
                 alert.showAndWait();
                 
                 // get username form textfield which we need to call this.username
-                getData.username = this.username.getText();
+                getData.username = this.username.getText(); // since user are authenticated we can now get the username but not need to load it from database just get form textfield so faster loading
                 // Hide the current window (login form)
                 // loginBtn.getScene().getWindow().hide();
                 

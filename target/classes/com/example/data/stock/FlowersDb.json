@@ -1,0 +1,18 @@
+{
+    "inStock" : [
+       {
+            "flower_id": ,
+            "flower_name": ,
+            "": ,
+            "FlowerImage": ,
+            "FlowerDescription": ,
+            "FlowerCategory": ,
+            "FlowerQuantity": ,
+            "Date": ,
+       } 
+    ],
+    
+    "pending_orders" : [
+        
+    ]
+}

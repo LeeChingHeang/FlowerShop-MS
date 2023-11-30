@@ -6,12 +6,12 @@
     },
     { 
         "id": "2",
-        "username": "Heang",
+        "username": "heang",
         "password": "password"
     },
     { 
         "id": "3",
-        "username": "Ching",
+        "username": "ching",
         "password": "password"
     } 
 ]
