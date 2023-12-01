@@ -1,9 +1,16 @@
 package com.example;
 
+import java.io.File;
 import java.net.URL;
+import java.util.List;
 import java.util.Optional;
 import java.util.ResourceBundle;
 
+import classes.api.JsonDatabaseV2;
+import javafx.application.Platform;
+import javafx.beans.value.ObservableValue;
+import javafx.collections.FXCollections;
+import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
@@ -17,10 +24,15 @@ import javafx.scene.control.Spinner;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import javafx.scene.control.TextField;
+import javafx.scene.control.TableColumn.CellDataFeatures;
+import javafx.scene.control.cell.PropertyValueFactory;
+import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.AnchorPane;
+import javafx.stage.FileChooser;
 import javafx.stage.Stage;
 import javafx.stage.Window;
+import javafx.util.Callback;
 
 public class DashboardController implements Initializable{
     @FXML
@@ -36,16 +48,16 @@ public class DashboardController implements Initializable{
     private Button availableFlowers_clearBtn;
 
     @FXML
-    private TableColumn<?, ?> availableFlowers_col_flowerID;
+    private TableColumn<FlowersData, String> availableFlowers_col_flowerID;
 
     @FXML
-    private TableColumn<?, ?> availableFlowers_col_flowerName;
+    private TableColumn<FlowersData, String> availableFlowers_col_flowerName;
 
     @FXML
-    private TableColumn<?, ?> availableFlowers_col_price;
+    private TableColumn<FlowersData, String> availableFlowers_col_price;
 
     @FXML
-    private TableColumn<?, ?> availableFlowers_col_status;
+    private TableColumn<FlowersData, String> availableFlowers_col_status;
 
     @FXML
     private Button availableFlowers_deleteBtn;
@@ -75,7 +87,7 @@ public class DashboardController implements Initializable{
     private ComboBox<?> availableFlowers_status;
 
     @FXML
-    private TableView<?> availableFlowers_tableView;
+    private TableView<FlowersData> availableFlowers_tableView;
 
     @FXML
     private Button availableFlowers_updateBtn;
@@ -108,16 +120,16 @@ public class DashboardController implements Initializable{
     private Button minimize;
 
     @FXML
-    private TableColumn<?, ?> purchase_col_flowerID;
+    private TableColumn<?,?> purchase_col_flowerID;
 
     @FXML
-    private TableColumn<?, ?> purchase_col_flowerName;
+    private TableColumn<?,?> purchase_col_flowerName;
 
     @FXML
-    private TableColumn<?, ?> purchase_col_price;
+    private TableColumn<?,?> purchase_col_price;
 
     @FXML
-    private TableColumn<?, ?> purchase_col_quantity;
+    private TableColumn<?,?> purchase_col_quantity;
 
     @FXML
     private ComboBox<?> purchase_flowerID;
@@ -196,11 +208,90 @@ public class DashboardController implements Initializable{
         // }
 
     // method
+   
+    //// Available Flowers Form
+    // add data to db
+    public void availableFlowersAddData() {
+        // get data from text field
+        String flowerId = availableFlowers_flowerID.getText();
+        String flowerName = availableFlowers_flowerName.getText();
+        String status = availableFlowers_status.getValue().toString();
+        String price = availableFlowers_price.getText();
+        String image = getData.imagePath;
+        // formate json data to java object
+        JsonDatabaseV2<FlowersData> flowersDb = new JsonDatabaseV2<>("src/main/resources/com/example/data/stock/FlowersDb.json", FlowersData.class); 
+        // store data to list then push it to observable list
+        List<FlowersData> loadedData = flowersDb.getEntityList(); 
+        // add new data to list
+        loadedData.add(new FlowersData(Integer.parseInt(flowerId), flowerName, status, Double.parseDouble(price), null, image));
+        // save data to json file
+        flowersDb.saveDatabase();
+        // show data to table view
+        availableFlowersShowListData();
+    }
+    // Insert Image
+    private Image image;
+    public void availableFlowersInsertImage(){
+        FileChooser open = new FileChooser();
+        open.setTitle("Open Image File");
+        open.getExtensionFilters().add(
+            new FileChooser.ExtensionFilter("Image Files", "*.png", "*.jpg")
+        );
+        
+        File file = open.showOpenDialog(main_form.getScene().getWindow());
+
+        if(file != null){
+            
+            getData.imagePath = file.getAbsolutePath();
+            image = new Image(file.toURI().toString(),116,148, false , true);
+            availableFlowers_imageView.setImage(image);
+        }
+    }
+    // Formate our data to display in table view
+    public ObservableList<FlowersData> availableFlowersListData(){
+        ObservableList<FlowersData> flowersList = FXCollections.observableArrayList();
+        try {
+            // formate json data to java object
+            JsonDatabaseV2<FlowersData> flowersDb = new JsonDatabaseV2<>("src/main/resources/com/example/data/stock/FlowersDb.json", FlowersData.class); 
+            // store data to list then push it to observable list
+            List<FlowersData> loadedData = flowersDb.getEntityList(); 
+            // for(FlowersData flower: flowersDb.getEntityList()){
+            //     flowersList.add(flower);
+            // }
+            // don't want to use loop
+            flowersList.addAll(loadedData);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return flowersList;
+    }
+
+    
+    private ObservableList<FlowersData> availableFlowersList;
+    public void availableFlowersShowListData(){
+        availableFlowersList = availableFlowersListData();
+        System.out.println(availableFlowersList.getClass());
+        
+        Platform.runLater(() -> {
+        
+            availableFlowers_col_flowerID.setCellValueFactory((Callback<CellDataFeatures<FlowersData, String>, ObservableValue<String>>) availableFlowersList.get(0)));
+            availableFlowers_col_flowerName.setCellValueFactory(new PropertyValueFactory<>("flowerName"));
+            availableFlowers_col_status.setCellValueFactory(new PropertyValueFactory<>("status"));
+            availableFlowers_col_price.setCellValueFactory(new PropertyValueFactory<>("price"));
+            
+            availableFlowers_tableView.setItems(availableFlowersList);
+        });
+    }
+
+    //// Home Form
+    // display username
     public void displayUsername() {
         String user = getData.username;
         username.setText(user.substring(0,1).toUpperCase() + user.substring(1));
     }
+    // switch form in dashboard 
     public void switchForm(ActionEvent event){
+        
        
         // // or want to be more crazy but cool 😎
         // home_btn.setOnAction(e -> handleButtonClick(home_form));
@@ -218,11 +309,17 @@ public class DashboardController implements Initializable{
         
         // why else-if when you can do these 😎
         home_btn.setOnAction(e -> justSwitch(home_form));
-        availableFlowers_btn.setOnAction(e -> justSwitch(availableFlowers_form));
+        availableFlowers_btn.setOnAction(e -> {
+            availableFlowersShowListData();
+            justSwitch(availableFlowers_form);
+        });
         purchase_btn.setOnAction(e -> justSwitch(purchase_form));
         
 
     }
+    
+
+    //// Part of Main form
     public void logout() {
         try {
             Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
@@ -258,7 +355,8 @@ public class DashboardController implements Initializable{
 
     @Override
     public void initialize(URL arg0, ResourceBundle arg1) {
-        // TODO Auto-generated method stub
+        // TODO: Auto-generated method stub
         displayUsername();
+        availableFlowersShowListData();
     };
 }

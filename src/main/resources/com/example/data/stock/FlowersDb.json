@@ -1,18 +1,12 @@
-{
-    "inStock" : [
-       {
-            "flower_id": ,
-            "flower_name": ,
-            "": ,
-            "FlowerImage": ,
-            "FlowerDescription": ,
-            "FlowerCategory": ,
-            "FlowerQuantity": ,
-            "Date": ,
-       } 
-    ],
+[
     
-    "pending_orders" : [
-        
-    ]
-}
+   {
+        "flower_id": "001",
+        "flower_name": "Rose",
+        "status": "In Stock",
+        "price": "100.00",
+        "date": "01-11-2023",
+        "image": "/src/main/resources/com/example/data/stock/assets/images/rose.jpg"
+   } 
+   
+]
