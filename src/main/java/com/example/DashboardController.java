@@ -274,7 +274,7 @@ public class DashboardController implements Initializable{
         
         Platform.runLater(() -> {
         
-            availableFlowers_col_flowerID.setCellValueFactory((Callback<CellDataFeatures<FlowersData, String>, ObservableValue<String>>) availableFlowersList.get(0)));
+            availableFlowers_col_flowerID.setCellValueFactory(new PropertyValueFactory<>("flowerId"));
             availableFlowers_col_flowerName.setCellValueFactory(new PropertyValueFactory<>("flowerName"));
             availableFlowers_col_status.setCellValueFactory(new PropertyValueFactory<>("status"));
             availableFlowers_col_price.setCellValueFactory(new PropertyValueFactory<>("price"));
