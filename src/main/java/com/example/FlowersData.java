@@ -2,27 +2,27 @@ package com.example;
 import com.fasterxml.jackson.annotation.JsonFormat;
 import com.fasterxml.jackson.annotation.JsonProperty;
 
+import javafx.collections.ObservableList;
+
 import java.time.LocalDate;
 public class FlowersData {
-    @JsonProperty("flower_id")
     private Integer flowerId;
 
-    @JsonProperty("flower_name")
     private String flowerName;
 
-    @JsonProperty("status")
     private String status;
     
-    @JsonProperty("price")
     private Double price;
     
-    @JsonProperty("image")
     private String image;
-    
+
     @JsonFormat(pattern = "dd-MM-yyyy")
-    private LocalDate date;
-    
-    public FlowersData(Integer flowerId, String flowerName, String status, Double price, LocalDate date, String image) {
+    // private LocalDate date;
+    private String date;
+    public FlowersData() {
+        super(); // call the constructor of the parent class
+    } 
+    public FlowersData(@JsonProperty("flowerId") Integer flowerId,@JsonProperty("flowerName") String flowerName,@JsonProperty ("status") String status,@JsonProperty ("price") Double price, @JsonProperty("date") String date, @JsonProperty("image") String image) {
         this.flowerId = flowerId;
         this.flowerName = flowerName;
         this.status = status;
@@ -30,30 +30,55 @@ public class FlowersData {
         this.date = date;
         this.image = image;
     }
-    
+   
+
     public Integer getFlowerId() {
-        return flowerId;
+        return this.flowerId;
     }
 
+    public void setFlowerId(Integer flowerId) {
+        this.flowerId = flowerId;
+    }
 
     public String getFlowerName() {
-        return flowerName;
+        return this.flowerName;
     }
 
+    public void setFlowerName(String flowerName) {
+        this.flowerName = flowerName;
+    }
 
     public String getStatus() {
-        return status;
+        return this.status;
+    }
+
+    public void setStatus(String status) {
+        this.status = status;
     }
 
     public Double getPrice() {
-        return price;
+        return this.price;
     }
 
-    public LocalDate getDate() {
-        return date;
+    public void setPrice(Double price) {
+        this.price = price;
     }
 
     public String getImage() {
-        return image;
+        return this.image;
     }
+
+    public void setImage(String image) {
+        this.image = image;
+    }
+
+    public String getDate() {
+        return this.date;
+    }
+
+    public void setDate(String date) {
+        this.date = date;
+    }
+    
+
 }

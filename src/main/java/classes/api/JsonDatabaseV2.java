@@ -10,26 +10,24 @@ import java.util.List;
 import java.util.Optional;
 
 public class JsonDatabaseV2<T> {
-    private final String databaseFilePath;
-    private final Class<T> entityType;
+    private final String DB_FILE_PATH;
     private List<T> entityList;
 
-    public JsonDatabaseV2(String databaseFilePath, Class<T> entityType) {
-        this.databaseFilePath = databaseFilePath;
-        this.entityType = entityType;
+    public JsonDatabaseV2(String dataBaseFilePath) {
+        DB_FILE_PATH = dataBaseFilePath;
         this.entityList = loadDatabase();
     }
 
     public List<T> getEntityList() {
-        return new ArrayList<>(entityList);
+        return entityList;
     }
 
-    // check if the entity exists in the database
+  /*   // check if the entity exists in the database
     public Optional<T> authenticateEntity(String propertyName, String propertyValue) {
         return entityList.stream()
                 .filter(entity -> getPropertyValue(entity, propertyName).equals(propertyValue))
                 .findFirst();
-    }
+    } */
 
     public void addEntity(T entity) {
         entityList.add(entity);
@@ -39,7 +37,7 @@ public class JsonDatabaseV2<T> {
     public void saveDatabase() {
         ObjectMapper objectMapper = new ObjectMapper();
         try {
-            objectMapper.writeValue(new File(databaseFilePath), entityList);
+            objectMapper.writeValue(new File(DB_FILE_PATH), entityList);
         } catch (IOException e) {
             e.printStackTrace();
         }
@@ -48,8 +46,8 @@ public class JsonDatabaseV2<T> {
     private List<T> loadDatabase() {
         ObjectMapper objectMapper = new ObjectMapper();
         try {
-            return objectMapper.readValue(new File(databaseFilePath), new TypeReference<List<T>>() {
-            });
+            return objectMapper.readValue(new File(DB_FILE_PATH), new TypeReference<List<T>>() {});
+            
         } catch (IOException e) {
             return new ArrayList<>();
         }

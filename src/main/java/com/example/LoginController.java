@@ -4,7 +4,7 @@ import java.io.IOException;
 import java.net.URL;
 import java.util.ResourceBundle;
 
-import classes.api.JsonDatabase;
+import classes.api.GetUserData;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.Alert;
@@ -38,7 +38,7 @@ public class LoginController implements Initializable{
     
     public void login() throws IOException {
         // calling our database api
-        JsonDatabase db = new JsonDatabase();
+        GetUserData db = new GetUserData();
         String username = this.username.getText(); 
         String password = this.password.getText();
         Alert alert;

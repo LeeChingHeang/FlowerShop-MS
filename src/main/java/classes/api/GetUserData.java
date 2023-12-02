@@ -9,13 +9,13 @@ import java.util.List;
 import java.util.Optional;
 // custom class
 import com.example.User;
-public class JsonDatabase {
+public class GetUserData {
     // just a path to the json file
     // TODO: change path to argument so make our class recursive
     private static final String DATABASE_FILE_PATH = "src/main/resources/com/example/data/login/admin.json";
     private List<User> userList;
 
-    public JsonDatabase(){
+    public GetUserData(){
         this.userList = loadDatabase();
     }
     

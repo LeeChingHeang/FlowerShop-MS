@@ -1,8 +1,15 @@
 [
-    
    {
-        "flower_id": "001",
-        "flower_name": "Rose",
+        "flowerId": "001",
+        "flowerName": "Rose",
+        "status": "In Stock",
+        "price": "100.00",
+        "date": "01-11-2023",
+        "image": "/src/main/resources/com/example/data/stock/assets/images/rose.jpg"
+   }, 
+   {
+        "flowerId": "002",
+        "flowerName": "Vanilla",
         "status": "In Stock",
         "price": "100.00",
         "date": "01-11-2023",

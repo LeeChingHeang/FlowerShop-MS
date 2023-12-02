@@ -6,8 +6,11 @@ import java.util.List;
 import java.util.Optional;
 import java.util.ResourceBundle;
 
+import classes.api.GetFlowersData;
 import classes.api.JsonDatabaseV2;
 import javafx.application.Platform;
+import javafx.beans.property.SimpleObjectProperty;
+import javafx.beans.property.SimpleStringProperty;
 import javafx.beans.value.ObservableValue;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
@@ -219,7 +222,7 @@ public class DashboardController implements Initializable{
         String price = availableFlowers_price.getText();
         String image = getData.imagePath;
         // formate json data to java object
-        JsonDatabaseV2<FlowersData> flowersDb = new JsonDatabaseV2<>("src/main/resources/com/example/data/stock/FlowersDb.json", FlowersData.class); 
+        JsonDatabaseV2<FlowersData> flowersDb = new JsonDatabaseV2<>("src/main/resources/com/example/data/stock/FlowersDb.json"); 
         // store data to list then push it to observable list
         List<FlowersData> loadedData = flowersDb.getEntityList(); 
         // add new data to list
@@ -252,9 +255,11 @@ public class DashboardController implements Initializable{
         ObservableList<FlowersData> flowersList = FXCollections.observableArrayList();
         try {
             // formate json data to java object
-            JsonDatabaseV2<FlowersData> flowersDb = new JsonDatabaseV2<>("src/main/resources/com/example/data/stock/FlowersDb.json", FlowersData.class); 
+            // JsonDatabaseV2<FlowersData> flowersDb = new JsonDatabaseV2<>("src/main/resources/com/example/data/stock/FlowersDb.json"); 
             // store data to list then push it to observable list
-            List<FlowersData> loadedData = flowersDb.getEntityList(); 
+            // System.out.println(flowersDb.getEntityList());
+            List<FlowersData> loadedData = new GetFlowersData().getFlowersList(); 
+            System.out.println(loadedData);
             // for(FlowersData flower: flowersDb.getEntityList()){
             //     flowersList.add(flower);
             // }
@@ -270,16 +275,16 @@ public class DashboardController implements Initializable{
     private ObservableList<FlowersData> availableFlowersList;
     public void availableFlowersShowListData(){
         availableFlowersList = availableFlowersListData();
-        System.out.println(availableFlowersList.getClass());
-        
+        // System.out.println(availableFlowersList.getClass()); 
         Platform.runLater(() -> {
-        
+
             availableFlowers_col_flowerID.setCellValueFactory(new PropertyValueFactory<>("flowerId"));
             availableFlowers_col_flowerName.setCellValueFactory(new PropertyValueFactory<>("flowerName"));
             availableFlowers_col_status.setCellValueFactory(new PropertyValueFactory<>("status"));
             availableFlowers_col_price.setCellValueFactory(new PropertyValueFactory<>("price"));
             
             availableFlowers_tableView.setItems(availableFlowersList);
+            
         });
     }
 
