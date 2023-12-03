@@ -271,14 +271,14 @@
                                     <String fx:value="shadow" />
                                  </styleClass>
                                  <children>
-                                    <TextField fx:id="availableFlowers_search" layoutX="14.0" layoutY="14.0" prefHeight="30.0" prefWidth="300.0" promptText="Search" styleClass="search" stylesheets="@style/dashboardDesign.css" />
+                                    <TextField fx:id="availableFlowers_search" layoutX="14.0" layoutY="14.0" onKeyTyped="#availableFlowersSearch" prefHeight="30.0" prefWidth="300.0" promptText="Search" styleClass="search" stylesheets="@style/dashboardDesign.css" />
                                     <FontAwesomeIcon glyphName="SEARCH" layoutX="22.0" layoutY="36.0" size="1.5em" text="" />
                                     <TableView fx:id="availableFlowers_tableView" layoutX="14.0" layoutY="66.0" onMouseClicked="#availableFlowerSelect" prefHeight="457.0" prefWidth="585.0">
                                       <columns>
                                         <TableColumn fx:id="availableFlowers_col_flowerID" prefWidth="117.0" text="Flower ID" />
                                         <TableColumn fx:id="availableFlowers_col_flowerName" prefWidth="128.0" text="Flower Name" />
-                                          <TableColumn fx:id="availableFlowers_col_status" prefWidth="242.0" text="Status" />
-                                          <TableColumn fx:id="availableFlowers_col_price" prefWidth="97.0" text="Price ($)" />
+                                          <TableColumn fx:id="availableFlowers_col_status" minWidth="0.0" prefWidth="198.0" text="Status" />
+                                          <TableColumn fx:id="availableFlowers_col_price" prefWidth="136.0" text="Price ($)" />
                                       </columns>
                                     </TableView>
                                  </children>

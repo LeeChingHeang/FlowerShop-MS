@@ -78,5 +78,14 @@ public class FlowersData {
         this.date = date;
     }
     
+    // @Override
+    // public String toString() {
+    //     return "FlowersData{" +
+    //             "flowerId=" + flowerId +
+    //             ", flowerName='" + flowerName + '\'' +
+    //             ", status='" + status + '\'' +
+    //             ", price=" + price +
+    //             '}';
+    // }
 
 }
