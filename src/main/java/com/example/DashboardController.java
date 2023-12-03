@@ -6,12 +6,9 @@ import java.util.List;
 import java.util.Optional;
 import java.util.ResourceBundle;
 
-import classes.api.GetFlowersData;
 import classes.api.JsonDatabaseV2;
 import javafx.application.Platform;
-import javafx.beans.property.SimpleObjectProperty;
-import javafx.beans.property.SimpleStringProperty;
-import javafx.beans.value.ObservableValue;
+
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
@@ -27,7 +24,6 @@ import javafx.scene.control.Spinner;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import javafx.scene.control.TextField;
-import javafx.scene.control.TableColumn.CellDataFeatures;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
@@ -35,7 +31,6 @@ import javafx.scene.layout.AnchorPane;
 import javafx.stage.FileChooser;
 import javafx.stage.Stage;
 import javafx.stage.Window;
-import javafx.util.Callback;
 
 public class DashboardController implements Initializable{
     @FXML
@@ -212,7 +207,6 @@ public class DashboardController implements Initializable{
 
     // method
    
-    //// Available Flowers Form
     // add data to db
     public void availableFlowersAddData() {
         // get data from text field
@@ -222,7 +216,7 @@ public class DashboardController implements Initializable{
         String price = availableFlowers_price.getText();
         String image = getData.imagePath;
         // formate json data to java object
-        JsonDatabaseV2<FlowersData> flowersDb = new JsonDatabaseV2<>("src/main/resources/com/example/data/stock/FlowersDb.json"); 
+        JsonDatabaseV2<FlowersData> flowersDb = new JsonDatabaseV2<>("src/main/resources/com/example/data/stock/FlowersDb.json", FlowersData.class); 
         // store data to list then push it to observable list
         List<FlowersData> loadedData = flowersDb.getEntityList(); 
         // add new data to list
@@ -231,7 +225,7 @@ public class DashboardController implements Initializable{
         flowersDb.saveDatabase();
         // show data to table view
         availableFlowersShowListData();
-    }
+    } 
     // Insert Image
     private Image image;
     public void availableFlowersInsertImage(){
@@ -255,11 +249,12 @@ public class DashboardController implements Initializable{
         ObservableList<FlowersData> flowersList = FXCollections.observableArrayList();
         try {
             // formate json data to java object
-            // JsonDatabaseV2<FlowersData> flowersDb = new JsonDatabaseV2<>("src/main/resources/com/example/data/stock/FlowersDb.json"); 
+            JsonDatabaseV2<FlowersData> flowersDb = new JsonDatabaseV2<>("src/main/resources/com/example/data/stock/FlowersDb.json", FlowersData.class); 
             // store data to list then push it to observable list
-            // System.out.println(flowersDb.getEntityList());
-            List<FlowersData> loadedData = new GetFlowersData().getFlowersList(); 
-            System.out.println(loadedData);
+            System.out.println(flowersDb.getEntityList());
+            List<FlowersData> loadedData = flowersDb.getEntityList(); 
+            // List<FlowersData> loadedData = new GetFlowersData().getFlowersList(); 
+            // System.out.println(loadedData);
             // for(FlowersData flower: flowersDb.getEntityList()){
             //     flowersList.add(flower);
             // }

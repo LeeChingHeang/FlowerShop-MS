@@ -17,8 +17,8 @@ public class FlowersData {
     private String image;
 
     @JsonFormat(pattern = "dd-MM-yyyy")
-    // private LocalDate date;
     private String date;
+    // private String date;
     public FlowersData() {
         super(); // call the constructor of the parent class
     } 

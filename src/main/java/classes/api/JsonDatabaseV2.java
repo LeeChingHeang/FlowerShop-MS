@@ -11,10 +11,12 @@ import java.util.Optional;
 
 public class JsonDatabaseV2<T> {
     private final String DB_FILE_PATH;
+    private final Class<T> elementType;
     private List<T> entityList;
 
-    public JsonDatabaseV2(String dataBaseFilePath) {
+    public JsonDatabaseV2(String dataBaseFilePath, Class<T> elementType) {
         DB_FILE_PATH = dataBaseFilePath;
+        this.elementType = elementType;
         this.entityList = loadDatabase();
     }
 
@@ -46,7 +48,10 @@ public class JsonDatabaseV2<T> {
     private List<T> loadDatabase() {
         ObjectMapper objectMapper = new ObjectMapper();
         try {
-            return objectMapper.readValue(new File(DB_FILE_PATH), new TypeReference<List<T>>() {});
+            // return objectMapper.readValue(new File(DB_FILE_PATH), new TypeReference<List<T>>() {});
+
+            //
+            return objectMapper.readValue(new File(DB_FILE_PATH), objectMapper.getTypeFactory().constructCollectionType(List.class, elementType));
             
         } catch (IOException e) {
             return new ArrayList<>();
