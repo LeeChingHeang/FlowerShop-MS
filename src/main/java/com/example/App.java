@@ -1,3 +1,4 @@
+
 package com.example;
 
 import javafx.application.Application;
@@ -22,13 +23,12 @@ public class App extends Application {
 
     @Override
     public void start(Stage stage) throws IOException {
-        setRoot("Login");
+        setRoot(stage, "Login");
     }
 
-    static void setRoot(String fxml) throws IOException {
+    static void setRoot(Stage stage, String fxml) throws IOException {
         // scene.setRoot(loadFXML(fxml));
         Parent root = loadFXML(fxml);
-        Stage stage = new Stage();
         scene = new Scene(root);
         /// Interaction with the window
         root.setOnMousePressed(event -> {
@@ -52,7 +52,6 @@ public class App extends Application {
         stage.setScene(scene);
         stage.initStyle(StageStyle.TRANSPARENT);
         stage.show();
-        
     }
 
     private static Parent loadFXML(String fxml) throws IOException {
@@ -63,6 +62,4 @@ public class App extends Application {
     public static void main(String[] args) {
         launch();
     }
-
-
 }

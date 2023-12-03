@@ -214,6 +214,129 @@ public class DashboardController implements Initializable{
         // }
 
     // method
+    
+    //// Available Flowers Form
+    // Search Data in Table
+    // delete data
+    public void availableFlowersDelete(){
+     // get data from text field
+        String flowerId = availableFlowers_flowerID.getText();
+        String flowerName = availableFlowers_flowerName.getText();
+        // String status = (String)availableFlowers_status.getSelectionModel().getSelectedItem();
+        String price = availableFlowers_price.getText();
+        String image_path = getData.imagePath;
+        // loading flowersDb form json file
+        JsonDatabaseV2<FlowersData> flowersDb = new JsonDatabaseV2<>("src/main/resources/com/example/data/stock/FlowersDb.json", FlowersData.class);
+        try{
+            Alert alert;
+            if(flowerId.isEmpty() || flowerName.isEmpty() || price.isEmpty() || image_path == ""){
+                alert = new Alert(Alert.AlertType.ERROR);
+                alert.setTitle("Error Message");
+                alert.setHeaderText(null);
+                alert.setContentText("Select data from table to delete!");
+                alert.showAndWait();
+            }else{
+                alert = new Alert(Alert.AlertType.CONFIRMATION);
+                alert.setTitle("Confirmation Message");
+                alert.setHeaderText(null);
+                alert.setContentText("Are you sure you want to DELETE Flower ID: " + flowerId + " ?");
+                Optional<ButtonType> option = alert.showAndWait();
+                
+                if(option.get().equals(ButtonType.OK)){
+                    // delete data
+                    flowersDb.deleteEntity( "flowerId", flowerId); 
+                    availableFlowersListData();
+                    availableFlowersClear();
+                    alert = new Alert(Alert.AlertType.INFORMATION);
+                    alert.setTitle("Information Message");
+                    alert.setHeaderText(null);
+                    alert.setContentText("Data Successfully DELETE!");
+                    alert.showAndWait() ;
+
+                    // Show updated data
+                    availableFlowersShowListData();
+
+                    /// Clear all field
+                    availableFlowersClear();
+                }
+            }
+
+        }catch(Exception e){
+            e.printStackTrace();
+        }       
+    }
+    // update data
+    public void availableFlowersUpdate(){
+        // get data from text field
+        String flowerId = availableFlowers_flowerID.getText();
+        String flowerName = availableFlowers_flowerName.getText();
+        String status = (String)availableFlowers_status.getSelectionModel().getSelectedItem();
+        String price = availableFlowers_price.getText();
+        String image_path = getData.imagePath;
+        // loading flowersDb form json file
+        JsonDatabaseV2<FlowersData> flowersDb = new JsonDatabaseV2<>("src/main/resources/com/example/data/stock/FlowersDb.json", FlowersData.class);
+        try{
+            Alert alert;
+            if(flowerId.isEmpty() || flowerName.isEmpty() || status == null || price.isEmpty() || image_path == ""){
+                alert = new Alert(Alert.AlertType.ERROR);
+                alert.setTitle("Error Message");
+                alert.setHeaderText(null);
+                alert.setContentText("Please fill all blank fields!");
+                alert.showAndWait();
+            }else{
+                alert = new Alert(Alert.AlertType.CONFIRMATION);
+                alert.setTitle("Confirmation Message");
+                alert.setHeaderText(null);
+                alert.setContentText("Are you sure you want to UPDATE Flower ID: " + flowerId + " ?");
+                Optional<ButtonType> option = alert.showAndWait();
+                
+                if(option.get().equals(ButtonType.OK)){
+                    // update data
+                    LocalDate date = LocalDate.now();
+                    DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd-MM-yyyy");
+
+                    FlowersData updateFlower = new FlowersData(Integer.parseInt(flowerId), flowerName, status, Double.parseDouble(price), date.format(formatter), image_path);
+                    flowersDb.updateEntity(updateFlower, "flowerId", flowerId); 
+                    availableFlowersListData();
+                    availableFlowersClear();
+                    alert = new Alert(Alert.AlertType.INFORMATION);
+                    alert.setTitle("Information Message");
+                    alert.setHeaderText(null);
+                    alert.setContentText("Update data successfully!");
+                    alert.showAndWait() ;
+
+                    // Show updated data
+                    availableFlowersShowListData();
+
+                    /// Clear all field
+                    availableFlowersClear();
+                }
+            }
+
+        }catch(Exception e){
+            e.printStackTrace();
+        }
+    }
+
+    // onSelect table element show info
+    public void availableFlowerSelect(){
+        FlowersData selectedFlower = availableFlowers_tableView.getSelectionModel().getSelectedItem(); 
+        int num = availableFlowers_tableView.getSelectionModel().getSelectedIndex();
+
+        if((num - 1) < -1) return;
+        
+        availableFlowers_flowerID.setText(String.valueOf(selectedFlower.getFlowerId()));
+        availableFlowers_flowerName.setText(selectedFlower.getFlowerName());
+        availableFlowers_price.setText(String.valueOf(selectedFlower.getPrice()));
+       
+        getData.imagePath = selectedFlower.getImage(); 
+        String uri = "file:" + selectedFlower.getImage();
+        image = new Image(uri,116,148,false , true);        
+        availableFlowers_imageView.setImage(image);
+
+    }
+
+
     String listStatus[] = {"In Stock", "Out of Stock"};
     // Show status in selection box
     public void availableFlowersStatus() {
@@ -234,7 +357,8 @@ public class DashboardController implements Initializable{
         availableFlowers_status.getSelectionModel().clearSelection();
         availableFlowers_price.setText("");
         availableFlowers_imageView.setImage(null);
-        getData.imagePath = "";
+        // getData.imagePath = "";
+        getData.imagePath = null; // so after clear we still could push data in even we didn't choose image
     }
     // add data to db
     public void availableFlowersAdd() {
@@ -275,11 +399,11 @@ public class DashboardController implements Initializable{
                     
                     // Refresh table view or repopulate table view
                     availableFlowersShowListData();
-                  /*   alert = new Alert(Alert.AlertType.INFORMATION);
+                    alert = new Alert(Alert.AlertType.INFORMATION);
                     alert.setTitle("Information Message");
                     alert.setHeaderText(null);
                     alert.setContentText("Add data successfully!");
-                    alert.showAndWait() */;
+                    alert.showAndWait() ;
                     
                     // clear data in form
                     availableFlowersClear();
@@ -399,7 +523,8 @@ public class DashboardController implements Initializable{
                 // no-hide just close
                 Window window = logoutBtn.getScene().getWindow();
                 ((Stage) window).close();
-                App.setRoot("Login");
+                Stage stage = new Stage();
+                App.setRoot(stage, "Login");
             }
         } catch (Exception e) {
             e.printStackTrace();

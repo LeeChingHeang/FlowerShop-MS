@@ -4,10 +4,11 @@ import java.io.IOException;
 import java.net.URL;
 import java.util.ResourceBundle;
 
+import com.fasterxml.jackson.core.exc.StreamConstraintsException;
+
 import classes.api.GetUserData;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
-import javafx.scene.Parent;
 import javafx.scene.control.Alert;
 import javafx.scene.control.Button;
 import javafx.scene.control.PasswordField;
@@ -38,10 +39,14 @@ public class LoginController implements Initializable{
     
      
     public void login() throws IOException {
+        // Just for debugging
+        this.username.setText("admin");
+        this.password.setText("admin123");
         // calling our database api
         GetUserData db = new GetUserData();
         String username = this.username.getText(); 
         String password = this.password.getText();
+         
         Alert alert;
         // check if username and password are empty
         if(username.isEmpty() || password.isEmpty()) {
@@ -108,7 +113,8 @@ public class LoginController implements Initializable{
                 // stage.show();
                 
                 // re-using the setRoot method from App.java
-                App.setRoot("dashboard");
+                Stage stage = new Stage();
+                App.setRoot(stage, "dashboard");
             }else {
                 alert = new Alert(Alert.AlertType.ERROR);
                 alert.setTitle("Error Message");

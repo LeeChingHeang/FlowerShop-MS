@@ -35,6 +35,25 @@ public class JsonDatabaseV2<T> {
         entityList.add(entity);
         saveDatabase();
     }
+    
+     public void deleteEntity(String propertyName, String propertyValue) {
+        Optional<T> entityToDelete = checkEntity(propertyName, propertyValue);
+        entityToDelete.ifPresent(entity -> {
+            entityList.remove(entity);
+            saveDatabase();
+        });
+    }
+      public void updateEntity(T updatedEntity, String propertyName, String propertyValue) {
+        // check each entity in the list
+        Optional<T> entityToUpdate = checkEntity(propertyName, propertyValue);
+        // if found, update the entity
+        entityToUpdate.ifPresent(entity -> {
+            // Update the existing entity with the new data
+            int index = entityList.indexOf(entity);
+            entityList.set(index, updatedEntity);
+            saveDatabase();
+        });
+    }
 
     public void saveDatabase() {
         ObjectMapper objectMapper = new ObjectMapper();

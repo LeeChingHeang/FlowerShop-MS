@@ -2,7 +2,6 @@ package com.example;
 import com.fasterxml.jackson.annotation.JsonFormat;
 import com.fasterxml.jackson.annotation.JsonProperty;
 
-import javafx.collections.ObservableList;
 
 public class FlowersData {
     private Integer flowerId;
