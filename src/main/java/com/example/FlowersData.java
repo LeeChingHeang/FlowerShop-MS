@@ -4,7 +4,6 @@ import com.fasterxml.jackson.annotation.JsonProperty;
 
 import javafx.collections.ObservableList;
 
-import java.time.LocalDate;
 public class FlowersData {
     private Integer flowerId;
 

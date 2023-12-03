@@ -2,6 +2,9 @@ package com.example;
 
 import java.io.File;
 import java.net.URL;
+import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 import java.util.ResourceBundle;
@@ -15,6 +18,7 @@ import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.chart.BarChart;
+import javafx.scene.chart.PieChart.Data;
 import javafx.scene.control.Alert;
 import javafx.scene.control.Button;
 import javafx.scene.control.ButtonType;
@@ -27,6 +31,7 @@ import javafx.scene.control.TextField;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
+import javafx.scene.input.DataFormat;
 import javafx.scene.layout.AnchorPane;
 import javafx.stage.FileChooser;
 import javafx.stage.Stage;
@@ -160,11 +165,14 @@ public class DashboardController implements Initializable{
     private void justSwitch(AnchorPane clickForm) {
         // since I name the button with the same name as the form (not include "_*")
         String elementId = clickForm.getId();
+        // slip the id to get the prefix which is before "_"
         String[] prefix = elementId.split("_");
         
+        // now we just need to add "_btn" to the prefix to get the button id
         String btnIdToShow = prefix[0] + "_btn";
         // make change to button that interact with the form
-        Button selectBtn = (Button) main_form.lookup("#" + btnIdToShow);
+        // since the button is in the main_form so we need to get the button from main_form
+        Button selectBtn = (Button) main_form.lookup("#" + btnIdToShow); // lookup() method is used to find the node with the specified CSS selector.
         
         for (Button btn : new Button[]{home_btn, availableFlowers_btn, purchase_btn}) {
             btn.setStyle("-fx-background-color: transparent");
@@ -206,25 +214,80 @@ public class DashboardController implements Initializable{
         // }
 
     // method
-   
+    String listStatus[] = {"In Stock", "Out of Stock"};
+    // Show status in selection box
+    public void availableFlowersStatus() {
+        List<String> statusList = new ArrayList<>();
+        for(String status: listStatus){
+            statusList.add(status);
+        }
+        
+        // convert list to observable list so javafx can use it
+        ObservableList listData = FXCollections.observableArrayList(statusList);
+        availableFlowers_status.setItems(listData);
+
+    }
+    // clear data in form
+    public void availableFlowersClear() {
+        availableFlowers_flowerID.setText("");
+        availableFlowers_flowerName.setText("");
+        availableFlowers_status.getSelectionModel().clearSelection();
+        availableFlowers_price.setText("");
+        availableFlowers_imageView.setImage(null);
+        getData.imagePath = "";
+    }
     // add data to db
-    public void availableFlowersAddData() {
+    public void availableFlowersAdd() {
         // get data from text field
         String flowerId = availableFlowers_flowerID.getText();
         String flowerName = availableFlowers_flowerName.getText();
-        String status = availableFlowers_status.getValue().toString();
+        String status = (String)availableFlowers_status.getSelectionModel().getSelectedItem();
         String price = availableFlowers_price.getText();
-        String image = getData.imagePath;
+        String image_path = getData.imagePath;
+
         // formate json data to java object
+        // just call JsonDatabaseV2 to fetch data from db_path
         JsonDatabaseV2<FlowersData> flowersDb = new JsonDatabaseV2<>("src/main/resources/com/example/data/stock/FlowersDb.json", FlowersData.class); 
-        // store data to list then push it to observable list
-        List<FlowersData> loadedData = flowersDb.getEntityList(); 
-        // add new data to list
-        loadedData.add(new FlowersData(Integer.parseInt(flowerId), flowerName, status, Double.parseDouble(price), null, image));
-        // save data to json file
-        flowersDb.saveDatabase();
-        // show data to table view
-        availableFlowersShowListData();
+        try{
+            Alert alert;
+            // check if input is empty
+            if(flowerId.isEmpty() || flowerName.isEmpty() || status == null || price.isEmpty() || image_path == ""){
+                alert = new Alert(Alert.AlertType.ERROR);
+                alert.setTitle("Error Message");
+                alert.setHeaderText(null);
+                alert.setContentText("Please fill all blank fields!");
+                alert.showAndWait();
+            }else{
+                // Check if the flowerId already exists
+                if(flowersDb.checkEntity("flowerId", flowerId).isPresent()){
+                    alert = new Alert(Alert.AlertType.ERROR);
+                    alert.setTitle("Error Message");
+                    alert.setHeaderText(null);
+                    alert.setContentText("Flower ID: " + flowerId  + " was already exists!");
+                    alert.showAndWait();
+                }else{
+                    // since cannot get date from datepicker so we need to get it from java 
+                    LocalDate date = LocalDate.now();
+                    DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd-MM-yyyy");
+                    // push data to db
+                    FlowersData newFlower = new FlowersData(Integer.parseInt(flowerId), flowerName, status, Double.parseDouble(price), date.format(formatter), image_path);
+                    flowersDb.addEntity(newFlower);
+                    
+                    // Refresh table view or repopulate table view
+                    availableFlowersShowListData();
+                  /*   alert = new Alert(Alert.AlertType.INFORMATION);
+                    alert.setTitle("Information Message");
+                    alert.setHeaderText(null);
+                    alert.setContentText("Add data successfully!");
+                    alert.showAndWait() */;
+                    
+                    // clear data in form
+                    availableFlowersClear();
+                }
+            }
+        }catch(Exception e){
+            e.printStackTrace();
+        }
     } 
     // Insert Image
     private Image image;
@@ -238,7 +301,6 @@ public class DashboardController implements Initializable{
         File file = open.showOpenDialog(main_form.getScene().getWindow());
 
         if(file != null){
-            
             getData.imagePath = file.getAbsolutePath();
             image = new Image(file.toURI().toString(),116,148, false , true);
             availableFlowers_imageView.setImage(image);
@@ -251,7 +313,6 @@ public class DashboardController implements Initializable{
             // formate json data to java object
             JsonDatabaseV2<FlowersData> flowersDb = new JsonDatabaseV2<>("src/main/resources/com/example/data/stock/FlowersDb.json", FlowersData.class); 
             // store data to list then push it to observable list
-            System.out.println(flowersDb.getEntityList());
             List<FlowersData> loadedData = flowersDb.getEntityList(); 
             // List<FlowersData> loadedData = new GetFlowersData().getFlowersList(); 
             // System.out.println(loadedData);
@@ -311,6 +372,7 @@ public class DashboardController implements Initializable{
         home_btn.setOnAction(e -> justSwitch(home_form));
         availableFlowers_btn.setOnAction(e -> {
             availableFlowersShowListData();
+            availableFlowersStatus();
             justSwitch(availableFlowers_form);
         });
         purchase_btn.setOnAction(e -> justSwitch(purchase_form));
@@ -355,8 +417,8 @@ public class DashboardController implements Initializable{
 
     @Override
     public void initialize(URL arg0, ResourceBundle arg1) {
-        // TODO: Auto-generated method stub
         displayUsername();
         availableFlowersShowListData();
+        availableFlowersStatus();
     };
 }

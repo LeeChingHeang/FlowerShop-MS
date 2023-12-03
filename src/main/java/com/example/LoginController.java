@@ -7,6 +7,7 @@ import java.util.ResourceBundle;
 import classes.api.GetUserData;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
+import javafx.scene.Parent;
 import javafx.scene.control.Alert;
 import javafx.scene.control.Button;
 import javafx.scene.control.PasswordField;
@@ -35,7 +36,7 @@ public class LoginController implements Initializable{
         System.exit(0);
     }
     
-    
+     
     public void login() throws IOException {
         // calling our database api
         GetUserData db = new GetUserData();
@@ -119,6 +120,6 @@ public class LoginController implements Initializable{
     }
     @Override
     public void initialize(URL arg0, ResourceBundle arg1) {
-
+        
     }
 }

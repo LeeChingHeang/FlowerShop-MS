@@ -23,18 +23,6 @@ public class App extends Application {
     @Override
     public void start(Stage stage) throws IOException {
         setRoot("Login");
-        Parent root = loadFXML("Login");
-
-        /// Interaction with the window
-        // if dragged when mouse is pressed on root of scene it will move the window and set opacity to .8 
-        root.setOnMouseDragged(event -> {
-            stage.setOpacity(.8);
-        });
-        
-        // on release of mouse set opacity back to 1
-        root.setOnMouseReleased(event -> {
-            stage.setOpacity(1);
-        });
     }
 
     static void setRoot(String fxml) throws IOException {
@@ -51,9 +39,16 @@ public class App extends Application {
         root.setOnMouseDragged(event -> {
             stage.setX(event.getScreenX() - x);
             stage.setY(event.getScreenY() - y);
-            
-            // stage.setOpacity(.8);
+             /// Interaction with the window
+            // if dragged when mouse is pressed on root of scene it will move the window and set opacity to .8 
+            if("Login".equals(fxml))
+                stage.setOpacity(.8);
         });
+        
+        root.setOnMouseReleased(event -> {
+            stage.setOpacity(1);
+        });
+        
         stage.setScene(scene);
         stage.initStyle(StageStyle.TRANSPARENT);
         stage.show();

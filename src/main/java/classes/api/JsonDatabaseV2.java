@@ -14,8 +14,8 @@ public class JsonDatabaseV2<T> {
     private final Class<T> elementType;
     private List<T> entityList;
 
-    public JsonDatabaseV2(String dataBaseFilePath, Class<T> elementType) {
-        DB_FILE_PATH = dataBaseFilePath;
+    public JsonDatabaseV2(String jsonFile_Path, Class<T> elementType) {
+        DB_FILE_PATH = jsonFile_Path;
         this.elementType = elementType;
         this.entityList = loadDatabase();
     }
@@ -24,12 +24,12 @@ public class JsonDatabaseV2<T> {
         return entityList;
     }
 
-  /*   // check if the entity exists in the database
-    public Optional<T> authenticateEntity(String propertyName, String propertyValue) {
+    // check if the entity exists in the database
+    public Optional<T> checkEntity(String propertyName, String propertyValue) {
         return entityList.stream()
                 .filter(entity -> getPropertyValue(entity, propertyName).equals(propertyValue))
                 .findFirst();
-    } */
+    } 
 
     public void addEntity(T entity) {
         entityList.add(entity);
@@ -50,7 +50,7 @@ public class JsonDatabaseV2<T> {
         try {
             // return objectMapper.readValue(new File(DB_FILE_PATH), new TypeReference<List<T>>() {});
 
-            //
+            // Suggest the objects are instances of the default LinkedHashMap class
             return objectMapper.readValue(new File(DB_FILE_PATH), objectMapper.getTypeFactory().constructCollectionType(List.class, elementType));
             
         } catch (IOException e) {
