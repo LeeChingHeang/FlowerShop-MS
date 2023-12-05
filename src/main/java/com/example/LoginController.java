@@ -4,8 +4,6 @@ import java.io.IOException;
 import java.net.URL;
 import java.util.ResourceBundle;
 
-import com.fasterxml.jackson.core.exc.StreamConstraintsException;
-
 import classes.api.GetUserData; 
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;

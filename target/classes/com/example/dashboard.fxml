@@ -301,18 +301,18 @@
                                              </font>
                                           </Label>
                                           <ComboBox fx:id="purchase_flowerID" layoutX="136.0" layoutY="34.0" onAction="#purchaseFlowerId" prefWidth="200.0" promptText="Choose..." styleClass="textfield" stylesheets="@style/dashboardDesign.css" />
-                                          <Label layoutX="30.0" layoutY="88.0" text="Flower Name:">
+                                          <Label layoutX="30.0" layoutY="77.0" text="Flower Name:">
                                              <font>
                                                 <Font name="Tahoma" size="15.0" />
                                              </font>
                                           </Label>
-                                          <ComboBox fx:id="purchase_flowerName" layoutX="136.0" layoutY="85.0" onAction="#purchaseFlowerName" prefWidth="200.0" promptText="Choose..." styleClass="textfield" stylesheets="@style/dashboardDesign.css" />
-                                          <Label layoutX="57.0" layoutY="139.0" text="Quantity:">
+                                          <ComboBox fx:id="purchase_flowerName" layoutX="136.0" layoutY="74.0" onAction="#purchaseFlowerName" prefWidth="200.0" promptText="Choose..." styleClass="textfield" stylesheets="@style/dashboardDesign.css" />
+                                          <Label layoutX="61.0" layoutY="115.0" text="Quantity:">
                                              <font>
                                                 <Font name="Tahoma" size="15.0" />
                                              </font>
                                           </Label>
-                                          <Spinner fx:id="purchase_quantity" layoutX="136.0" layoutY="136.0" prefHeight="25.0" prefWidth="120.0" styleClass="textfield" stylesheets="@style/dashboardDesign.css" />
+                                          <Spinner fx:id="purchase_quantity" layoutX="136.0" layoutY="112.0" onMouseClicked="#purchaseQuantity" prefHeight="25.0" prefWidth="120.0" styleClass="textfield" stylesheets="@style/dashboardDesign.css" />
                                           <Label layoutX="440.0" layoutY="59.0" text="Total:">
                                              <font>
                                                 <Font size="17.0" />
@@ -324,6 +324,7 @@
                                              </font>
                                           </Label>
                                           <Button fx:id="puschase_payBtn" layoutX="548.0" layoutY="144.0" mnemonicParsing="false" prefHeight="35.0" prefWidth="294.0" styleClass="add-btn" stylesheets="@style/dashboardDesign.css" text="Pay" />
+                                          <Button fx:id="purchase_addCart" layoutX="53.0" layoutY="160.0" mnemonicParsing="false" prefHeight="39.0" prefWidth="125.0" styleClass="add-btn" stylesheets="@style/dashboardDesign.css" text="Add to Cart" />
                                        </children>
                                     </AnchorPane>
                                     <TableView fx:id="purchase_tableView" layoutX="12.0" layoutY="220.0" prefHeight="307.0" prefWidth="856.0">

@@ -30,6 +30,7 @@ import javafx.scene.control.ButtonType;
 import javafx.scene.control.ComboBox;
 import javafx.scene.control.Label;
 import javafx.scene.control.Spinner;
+import javafx.scene.control.SpinnerValueFactory;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import javafx.scene.control.TextField;
@@ -152,7 +153,7 @@ public class DashboardController implements Initializable {
     private Button purchase_payBtn;
 
     @FXML
-    private Spinner<?> purchase_quantity;
+    private Spinner<Integer> purchase_quantity;
 
     @FXML
     private TableView<CustomerData> purchase_tableView;
@@ -165,6 +166,9 @@ public class DashboardController implements Initializable {
 
     @FXML
     private Label username;
+
+    @FXML
+    private Button purchase_addCart;
 
     // justSome Switch 🤓
     private void justSwitch(AnchorPane clickForm) {
@@ -517,10 +521,13 @@ public class DashboardController implements Initializable {
     }
 
     //// Purchase Form
+    
+    public void purchaseAddCart(){
+        
+    }
+
     public void purchaseFlowerId(){
         // loading FlowersData form flowersDb json file
-        purchase_flowerName.getSelectionModel().clearSelection(); //  clear it to avoid error
-
         JsonDatabaseV2<FlowersData> flowersDb = new JsonDatabaseV2<>(
                 "src/main/resources/com/example/data/stock/FlowersDb.json", FlowersData.class);
         // load filter only status "In Stock"
@@ -558,7 +565,6 @@ public class DashboardController implements Initializable {
                 ObservableList listData = FXCollections.observableArrayList();
                 // get flowerId form selection box
                 int flowerId = (int) purchase_flowerID.getSelectionModel().getSelectedItem();
-                System.out.println(flowerId);
                 // push data to table via observable list 
                 // fetch FlowerName associated with flowerId
                 flowersDb.getEntityList().stream()
@@ -571,6 +577,19 @@ public class DashboardController implements Initializable {
                 e.printStackTrace();
             }
     }
+    
+    // setting up spinner value for quantity
+    private SpinnerValueFactory<Integer> spinner;
+    public void purchaseSpinner(){
+            spinner = new SpinnerValueFactory.IntegerSpinnerValueFactory(1, 100, 1);
+            purchase_quantity.setValueFactory(spinner); 
+    }
+
+    private int qty;
+    public void purchaseQuantity(){
+        qty = purchase_quantity.getValue();
+    }
+    
     public ObservableList<CustomerData> purchaseListData(){
         purchaseCustomerId();
         ObservableList<CustomerData> purchaseList = FXCollections.observableArrayList();
@@ -661,7 +680,13 @@ public class DashboardController implements Initializable {
         purchase_btn.setOnAction(e -> {
             justSwitch(purchase_form);
             purchaseShowListData();
+            purchase_flowerID.getSelectionModel().clearSelection(); //  clear it to avoid error
+            purchase_flowerName.getSelectionModel().clearSelection(); //  clear it to avoid error
+            // purchase_flowerID.setPromptText("Select Flower ID");
+            // purchase_flowerName.setPromptText("Select Flower Name");
+
             purchaseFlowerId();
+            purchaseSpinner();
             // purchaseFlowerName();
         });
 
@@ -711,6 +736,7 @@ public class DashboardController implements Initializable {
 
         purchaseShowListData();
         purchaseFlowerId();
+        purchaseSpinner();
         // purchaseFlowerName();
 
     };
