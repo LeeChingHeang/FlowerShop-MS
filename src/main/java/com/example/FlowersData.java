@@ -16,10 +16,7 @@ public class FlowersData {
 
     @JsonFormat(pattern = "dd-MM-yyyy")
     private String date;
-    // private String date;
-    public FlowersData() {
-        super(); // call the constructor of the parent class
-    } 
+
     public FlowersData(@JsonProperty("flowerId") Integer flowerId,@JsonProperty("flowerName") String flowerName,@JsonProperty ("status") String status,@JsonProperty ("price") Double price, @JsonProperty("date") String date, @JsonProperty("image") String image) {
         this.flowerId = flowerId;
         this.flowerName = flowerName;

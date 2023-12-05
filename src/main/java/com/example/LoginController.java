@@ -6,7 +6,7 @@ import java.util.ResourceBundle;
 
 import com.fasterxml.jackson.core.exc.StreamConstraintsException;
 
-import classes.api.GetUserData;
+import classes.api.GetUserData; 
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.Alert;
@@ -43,6 +43,7 @@ public class LoginController implements Initializable{
         this.username.setText("admin");
         this.password.setText("admin123");
         // calling our database api
+        
         GetUserData db = new GetUserData();
         String username = this.username.getText(); 
         String password = this.password.getText();

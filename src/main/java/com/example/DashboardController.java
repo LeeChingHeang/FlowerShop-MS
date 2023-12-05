@@ -127,16 +127,16 @@ public class DashboardController implements Initializable {
     private Button minimize;
 
     @FXML
-    private TableColumn<?, ?> purchase_col_flowerID;
+    private TableColumn<CustomerData, String> purchase_col_flowerID;
 
     @FXML
-    private TableColumn<?, ?> purchase_col_flowerName;
+    private TableColumn<CustomerData, String> purchase_col_flowerName;
 
     @FXML
-    private TableColumn<?, ?> purchase_col_price;
+    private TableColumn<CustomerData, String> purchase_col_price;
 
     @FXML
-    private TableColumn<?, ?> purchase_col_quantity;
+    private TableColumn<CustomerData, String> purchase_col_quantity;
 
     @FXML
     private ComboBox<?> purchase_flowerID;
@@ -154,7 +154,7 @@ public class DashboardController implements Initializable {
     private Spinner<?> purchase_quantity;
 
     @FXML
-    private TableView<?> purchase_tableView;
+    private TableView<CustomerData> purchase_tableView;
 
     @FXML
     private Label purchase_total;
@@ -169,13 +169,13 @@ public class DashboardController implements Initializable {
     private void justSwitch(AnchorPane clickForm) {
         // since I name the button with the same name as the form (not include "_*")
         String elementId = clickForm.getId();
-        // slip the id to get the prefix which is before "_"
+        // slice the id to get the prefix which before "_"
         String[] prefix = elementId.split("_");
 
-        // now we just need to add "_btn" to the prefix to get the button id
+        // now we just need to add "_btn" to the prefix to set the button id 
         String btnIdToShow = prefix[0] + "_btn";
         // make change to button that interact with the form
-        // since the button is in the main_form so we need to get the button from
+        // since the button is locate on main_form so we need to get the button id from it which is .fxml id=(#buttonId)
         // main_form
         Button selectBtn = (Button) main_form.lookup("#" + btnIdToShow); // lookup() method is used to find the node
                                                                          // with the specified CSS selector.
@@ -489,38 +489,88 @@ public class DashboardController implements Initializable {
         });
     }
     // Search Data in Table
+    public void availableFlowersSearch() {
+        FilteredList<FlowersData> filteredData = new FilteredList<>(availableFlowersList, e -> true);
 
+        availableFlowers_search.textProperty().addListener((observableValue, oldValue, newValue) -> {
+            filteredData.setPredicate(flowerData -> {
+                if (newValue == null || newValue.trim().isEmpty()) {
+                    return true; // Display all records if the search value is empty
+                }
 
+                String searchKey = newValue.toLowerCase();
 
-public void availableFlowersSearch() {
-    FilteredList<FlowersData> filteredData = new FilteredList<>(availableFlowersList, e -> true);
+                // Perform case-insensitive comparisons
+                // return the matched data
+                return flowerData.getFlowerId().toString().toLowerCase().contains(searchKey) ||
+                        flowerData.getFlowerName().toLowerCase().contains(searchKey) ||
+                        flowerData.getPrice().toString().toLowerCase().contains(searchKey) ||
+                        flowerData.getStatus().toLowerCase().contains(searchKey);
+            });
+            // it constantly check if the search field is empty or not
+            // Use the existing SortedList if available, otherwise create a new one
+            SortedList<FlowersData> sortedData = new SortedList<>(filteredData);
+            sortedData.comparatorProperty().bind(availableFlowers_tableView.comparatorProperty());
+            availableFlowers_tableView.setItems(sortedData);
+        });
+    }
 
-    availableFlowers_search.textProperty().addListener((observableValue, oldValue, newValue) -> {
-        filteredData.setPredicate(flowerData -> {
-            if (newValue == null || newValue.trim().isEmpty()) {
-                return true; // Display all records if the search value is empty
+    //// Purchase Form
+    
+    public void purchaseFlowerId(){
+        
+    }
+    public ObservableList<CustomerData> purchaseListData(){
+        purchaseCustomerId();
+        ObservableList<CustomerData> purchaseList = FXCollections.observableArrayList();
+        // load data so we could use it to display in table view
+        JsonDatabaseV2<CustomerData> purchaseDb = new JsonDatabaseV2<>("src/main/resources/com/example/data/purchase/CustomerDb.json", CustomerData.class);
+        try {
+            List<CustomerData> loadedData = purchaseDb.getEntityList();
+            purchaseList.addAll(loadedData);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return purchaseList;
+    }
+    
+    private ObservableList<CustomerData> purchaseList;
+    public void purchaseShowListData(){
+        purchaseList = purchaseListData();
+        Platform.runLater(() -> {
+            purchase_col_flowerID.setCellValueFactory(new PropertyValueFactory<>("flowerId"));
+            purchase_col_flowerName.setCellValueFactory(new PropertyValueFactory<>("flowerName"));
+            purchase_col_price.setCellValueFactory(new PropertyValueFactory<>("price"));
+            purchase_col_quantity.setCellValueFactory(new PropertyValueFactory<>("quantity"));
+
+            purchase_tableView.setItems(purchaseList);
+        });
+    }
+    
+    private int customerId;
+    public void purchaseCustomerId(){
+        try {
+            // On purchase we will generate new customer id
+            // loading Customer_info form json file which is store the record the number of customer which have been purchase flowers in total 
+            JsonDatabaseV2<CustomerInfo> customerDb = new JsonDatabaseV2<>(
+                    "src/main/resources/com/example/data/purchase/Customer_info.json", CustomerInfo.class);
+            // load the raw data to List
+            List<CustomerInfo> customerList = customerDb.getEntityList();
+            // fetch the last customer id
+            customerId = customerList.get(customerList.size() - 1).getCustomerId() + 1;
+            // System.out.println(customerId);
+            // check to see on Customer_info table is empty or not if empty then set id to 1 else increment id
+            if (customerList.size() == 0) { // if our List is empty then set id to 1 
+                customerId = 1;
+            } else {
+                customerId++;
             }
+            
+        }catch (Exception e) {
+            e.printStackTrace();
+        }
 
-            String searchKey = newValue.toLowerCase();
-
-            // Perform case-insensitive comparisons
-            return flowerData.getFlowerId().toString().toLowerCase().contains(searchKey) ||
-                    flowerData.getFlowerName().toLowerCase().contains(searchKey) ||
-                    flowerData.getPrice().toString().toLowerCase().contains(searchKey) ||
-                    flowerData.getStatus().toLowerCase().contains(searchKey);
-        });  
-        // it constantly check if the search field is empty or not
-        // Use the existing SortedList if available, otherwise create a new one
-        SortedList<FlowersData> sortedData = new SortedList<>(filteredData);
-        sortedData.comparatorProperty().bind(availableFlowers_tableView.comparatorProperty());
-        availableFlowers_tableView.setItems(sortedData);
-    });
-
-    // Apply sorting directly on the filteredData
-}
-
-
-
+    }
 
     //// Home Form
     // display username
@@ -532,12 +582,6 @@ public void availableFlowersSearch() {
     // switch form in dashboard
     public void switchForm(ActionEvent event) {
 
-        // // or want to be more crazy but cool 😎
-        // home_btn.setOnAction(e -> handleButtonClick(home_form));
-        // availableFlowers_btn.setOnAction(e ->
-        // handleButtonClick(availableFlowers_form));
-        // purchase_btn.setOnAction(e -> handleButtonClick(purchase_form));
-
         // //old but gold 👌
         // if(event.getSource() == home_btn){
         // justSwitch(home_form);
@@ -547,7 +591,7 @@ public void availableFlowersSearch() {
         // justSwitch(purchase_form);
         // }
 
-        // why else-if when you can do these 😎
+        // why else-if when you can do these 😎 (Lambda Expressions)
         home_btn.setOnAction(e -> justSwitch(home_form));
         availableFlowers_btn.setOnAction(e -> {
             justSwitch(availableFlowers_form);
@@ -599,8 +643,9 @@ public void availableFlowersSearch() {
         displayUsername();
         // loading data in table view
         availableFlowersShowListData();
-
+        purchaseShowListData();
         // loading Status in selection box
         availableFlowersStatus();
+
     };
 }
