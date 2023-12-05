@@ -300,13 +300,13 @@
                                                 <Font name="Tahoma" size="15.0" />
                                              </font>
                                           </Label>
-                                          <ComboBox fx:id="purchase_flowerID" layoutX="136.0" layoutY="34.0" prefWidth="200.0" promptText="Choose..." styleClass="textfield" stylesheets="@style/dashboardDesign.css" />
+                                          <ComboBox fx:id="purchase_flowerID" layoutX="136.0" layoutY="34.0" onAction="#purchaseFlowerId" prefWidth="200.0" promptText="Choose..." styleClass="textfield" stylesheets="@style/dashboardDesign.css" />
                                           <Label layoutX="30.0" layoutY="88.0" text="Flower Name:">
                                              <font>
                                                 <Font name="Tahoma" size="15.0" />
                                              </font>
                                           </Label>
-                                          <ComboBox fx:id="purchase_flowerName" layoutX="136.0" layoutY="85.0" prefWidth="200.0" promptText="Choose..." styleClass="textfield" stylesheets="@style/dashboardDesign.css" />
+                                          <ComboBox fx:id="purchase_flowerName" layoutX="136.0" layoutY="85.0" onAction="#purchaseFlowerName" prefWidth="200.0" promptText="Choose..." styleClass="textfield" stylesheets="@style/dashboardDesign.css" />
                                           <Label layoutX="57.0" layoutY="139.0" text="Quantity:">
                                              <font>
                                                 <Font name="Tahoma" size="15.0" />

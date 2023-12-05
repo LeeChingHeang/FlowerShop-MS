@@ -11,6 +11,7 @@ import java.util.Optional;
 import java.util.ResourceBundle;
 import org.apache.commons.lang3.StringUtils;
 
+import java.util.stream.Collectors;
 import classes.api.JsonDatabaseV2;
 import javafx.application.Platform;
 
@@ -91,7 +92,7 @@ public class DashboardController implements Initializable {
     private TextField availableFlowers_search;
 
     @FXML
-    private ComboBox<?> availableFlowers_status;
+    private ComboBox<String> availableFlowers_status;
 
     @FXML
     private TableView<FlowersData> availableFlowers_tableView;
@@ -516,9 +517,59 @@ public class DashboardController implements Initializable {
     }
 
     //// Purchase Form
-    
     public void purchaseFlowerId(){
+        // loading FlowersData form flowersDb json file
+        purchase_flowerName.getSelectionModel().clearSelection(); //  clear it to avoid error
+
+        JsonDatabaseV2<FlowersData> flowersDb = new JsonDatabaseV2<>(
+                "src/main/resources/com/example/data/stock/FlowersDb.json", FlowersData.class);
+        // load filter only status "In Stock"
+        List<FlowersData> loadedData = flowersDb.getEntityList();
+        // filter only status "In Stock"
+            try{
+                ObservableList listData = FXCollections.observableArrayList();
+                // push data to table via observable list 
+                // filter only flowerId with status "In Stock"
+                loadedData.stream()
+                    .filter(flower -> flower.getStatus().equals("In Stock")).collect(Collectors.toList())
+                    .forEach(flower -> {
+                        listData.add(flower.getFlowerId());
+                    });
+                purchase_flowerID.setItems(listData);
+
+                // set flag to avoid error when flowerId of selection not selected which is nulll
+                if(purchase_flowerID.getSelectionModel().getSelectedItem() != null)
+                     purchaseFlowerName();
+                // purchase_flowerID.getSelectionModel().selectFirst();
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+   
+    }
+    
+    public void purchaseFlowerName(){
+        // loading FlowersData form flowersDb json file
+        JsonDatabaseV2<FlowersData> flowersDb = new JsonDatabaseV2<>(
+                "src/main/resources/com/example/data/stock/FlowersDb.json", FlowersData.class);
+        // load filter only status "In Stock"
+        // List<FlowersData> loadedData = flowersDb.getEntityList();
         
+            try{
+                ObservableList listData = FXCollections.observableArrayList();
+                // get flowerId form selection box
+                int flowerId = (int) purchase_flowerID.getSelectionModel().getSelectedItem();
+                System.out.println(flowerId);
+                // push data to table via observable list 
+                // fetch FlowerName associated with flowerId
+                flowersDb.getEntityList().stream()
+                    .filter(flower -> flower.getFlowerId() == flowerId).collect(Collectors.toList())
+                    .forEach(flower -> {
+                        listData.add(flower.getFlowerName());
+                    });
+                purchase_flowerName.setItems(listData);
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
     }
     public ObservableList<CustomerData> purchaseListData(){
         purchaseCustomerId();
@@ -527,13 +578,21 @@ public class DashboardController implements Initializable {
         JsonDatabaseV2<CustomerData> purchaseDb = new JsonDatabaseV2<>("src/main/resources/com/example/data/purchase/CustomerDb.json", CustomerData.class);
         try {
             List<CustomerData> loadedData = purchaseDb.getEntityList();
-            purchaseList.addAll(loadedData);
+            // filter only if customerId is matched
+            loadedData.stream()
+                .filter(customer -> customer.getCustomerId() == customerId).collect(Collectors.toList())
+                .forEach(customer -> {
+                    purchaseList.add(customer);
+                }); 
         } catch (Exception e) {
             e.printStackTrace();
         }
+        
         return purchaseList;
     }
     
+   
+    // Show data in table view
     private ObservableList<CustomerData> purchaseList;
     public void purchaseShowListData(){
         purchaseList = purchaseListData();
@@ -557,7 +616,7 @@ public class DashboardController implements Initializable {
             // load the raw data to List
             List<CustomerInfo> customerList = customerDb.getEntityList();
             // fetch the last customer id
-            customerId = customerList.get(customerList.size() - 1).getCustomerId() + 1;
+            customerId = customerList.get(customerList.size() - 1).getCustomerId();
             // System.out.println(customerId);
             // check to see on Customer_info table is empty or not if empty then set id to 1 else increment id
             if (customerList.size() == 0) { // if our List is empty then set id to 1 
@@ -599,7 +658,12 @@ public class DashboardController implements Initializable {
             availableFlowersStatus();
             availableFlowersSearch();
         });
-        purchase_btn.setOnAction(e -> justSwitch(purchase_form));
+        purchase_btn.setOnAction(e -> {
+            justSwitch(purchase_form);
+            purchaseShowListData();
+            purchaseFlowerId();
+            // purchaseFlowerName();
+        });
 
     }
 
@@ -643,9 +707,11 @@ public class DashboardController implements Initializable {
         displayUsername();
         // loading data in table view
         availableFlowersShowListData();
+        availableFlowersStatus(); // loading Status in selection box
+
         purchaseShowListData();
-        // loading Status in selection box
-        availableFlowersStatus();
+        purchaseFlowerId();
+        // purchaseFlowerName();
 
     };
 }
