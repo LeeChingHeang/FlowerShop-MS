@@ -37,9 +37,9 @@ public class LoginController implements Initializable{
     
      
     public void login() throws IOException {
-        // Just for debugging
+       /*  // Just for debugging
         this.username.setText("admin");
-        this.password.setText("admin123");
+        this.password.setText("admin123"); */
         // calling our database api
         
         GetUserData db = new GetUserData();

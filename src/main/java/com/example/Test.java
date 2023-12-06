@@ -1,12 +1,10 @@
 package com.example;
 
 import java.util.List;
-import java.util.Map;
 import java.util.stream.Collectors;
 import java.util.Optional;
 
 import classes.api.JsonLoaderV2;
-import classes.api.JsonLoaderV3;
 
 public class Test {
 
