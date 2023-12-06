@@ -6,7 +6,6 @@ import java.net.URL;
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
-import java.util.Comparator;
 import java.util.List;
 import java.util.Optional;
 import java.util.ResourceBundle;
@@ -20,7 +19,7 @@ import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.chart.BarChart;
-import javafx.scene.chart.PieChart.Data;
+import javafx.scene.chart.XYChart;
 import javafx.scene.control.Alert;
 import javafx.scene.control.Alert.AlertType;
 import javafx.scene.control.Button;
@@ -35,12 +34,10 @@ import javafx.scene.control.TextField;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
-import javafx.scene.input.DataFormat;
 import javafx.scene.layout.AnchorPane;
 import javafx.stage.FileChooser;
 import javafx.stage.Stage;
 import javafx.stage.Window;
-import org.apache.commons.lang3.StringUtils;
 
 public class DashboardController implements Initializable {
 
@@ -237,9 +234,94 @@ public class DashboardController implements Initializable {
   // }
 
   // method
+  //// Home Form
+  public void homeAF() {
+    // loading flowersDb form json file to get data of inStock status Flowers
+    JsonLoaderV2<FlowersData> flowersDb = new JsonLoaderV2<>(
+      "src/main/resources/com/example/data/stock/FlowersDb.json",
+      FlowersData.class
+    );
+
+    try {
+      List<FlowersData> loadedData = flowersDb.getEntityList();
+      // filter only status "In Stock"
+      List<FlowersData> inStock = loadedData
+        .stream()
+        // Filter
+        .filter(flower -> flower.getStatus().equals("In Stock"))
+        // push data to list
+        .collect(Collectors.toList());
+      // count total inStock
+      int totalInStock = inStock.size();
+      // display total inStock
+      home_availableFlowers.setText(String.valueOf(totalInStock));
+    } catch (Exception e) {
+      e.printStackTrace();
+    }
+  }
+
+  public void homeTC() {
+    // loading Customer_info form json file which is store the record the number of customer which have been purchase flowers in total
+    JsonLoaderV2<CustomerInfo> customer_info = new JsonLoaderV2<>(
+      "src/main/resources/com/example/data/purchase/Customer_info.json",
+      CustomerInfo.class
+    );
+    try {
+      List<CustomerInfo> loadedData = customer_info.getEntityList();
+      // count total customer
+      int totalCustomer = loadedData.size();
+      // display total customer
+      home_totalCustomers.setText(String.valueOf(totalCustomer));
+    } catch (Exception e) {
+      e.printStackTrace();
+    }
+  }
+
+  public void homeTI() {
+    // loading Customer_info form json file which is store the record the number of customer which have been purchase flowers in total
+    JsonLoaderV2<CustomerInfo> customer_info = new JsonLoaderV2<>(
+      "src/main/resources/com/example/data/purchase/Customer_info.json",
+      CustomerInfo.class
+    );
+    try {
+      List<CustomerInfo> loadedData = customer_info.getEntityList();
+      // count total income
+      double totalIncome = 0.0;
+      for (CustomerInfo customer : loadedData) {
+        totalIncome += customer.getTotal();
+      }
+      // display total income
+      home_totalIncome.setText("$" + String.valueOf(totalIncome));
+    } catch (Exception e) {
+      e.printStackTrace();
+    }
+  }
+
+  public void homeChart() {
+    home_chart.getData().clear();
+    // loading Customer_info form json file which is store the record the number of customer which have been purchase flowers in total
+    JsonLoaderV2<CustomerInfo> customer_info = new JsonLoaderV2<>(
+      "src/main/resources/com/example/data/purchase/Customer_info.json",
+      CustomerInfo.class
+    );
+    try {
+      XYChart.Series chart = new XYChart.Series();
+
+      List<CustomerInfo> loadedData = customer_info.getEntityList();
+      loadedData
+        .stream()
+        .forEach(customer -> {
+          chart
+            .getData()
+            .add(new XYChart.Data(customer.getDate(), customer.getTotal()));
+        });
+      home_chart.getData().add(chart);
+    } catch (Exception e) {
+      e.printStackTrace();
+    }
+  }
 
   //// Available Flowers Form
-
   // delete data
   public void availableFlowersDelete() {
     // get data from text field
@@ -606,10 +688,7 @@ public class DashboardController implements Initializable {
   }
 
   //// Purchase Form
-
-  /**
-   *
-   */
+  // add to cart
   public void purchaseAddToCart() {
     purchaseCustomerId();
     //
@@ -728,6 +807,7 @@ public class DashboardController implements Initializable {
           alert.showAndWait();
 
           totalPrice = 0.0; // reset total price
+          purchase_total.setText("$0.0");
         }
       }
     } catch (Exception e) {
@@ -768,6 +848,7 @@ public class DashboardController implements Initializable {
     purchase_flowerName.getSelectionModel().clearSelection(); //  clear it to avoid error
     purchase_flowerName.setValue(null);
     purchase_quantity.getValueFactory().setValue(1);
+    purchase_total.setText("$0.0");
   }
 
   public void purchaseFlowerId() {
@@ -795,7 +876,7 @@ public class DashboardController implements Initializable {
       purchase_flowerName.setPromptText("Choose...");
       purchase_flowerName.getSelectionModel().clearSelection(); //  clear it to avoid error
       purchase_flowerName.setValue(null);
-      // set flag to avoid error when flowerId of selection not selected which is nulll
+      // set flag to avoid error when flowerId of selection not selected which is null
       if (
         purchase_flowerID.getSelectionModel().getSelectedItem() != null
       ) purchaseFlowerName();
@@ -954,16 +1035,27 @@ public class DashboardController implements Initializable {
     // }
 
     // why else-if when you can do these 😎 (Lambda Expressions)
-    home_btn.setOnAction(e -> justSwitch(home_form));
+    home_btn.setOnAction(e -> {
+      justSwitch(home_form);
+
+      homeAF();
+      homeTI();
+      homeTC();
+
+      homeChart();
+    });
+
     availableFlowers_btn.setOnAction(e -> {
       justSwitch(availableFlowers_form);
+
       availableFlowersShowListData();
       availableFlowersStatus();
       availableFlowersSearch();
     });
+
     purchase_btn.setOnAction(e -> {
       justSwitch(purchase_form);
-
+        purchaseClear();
       purchaseShowListData();
       purchaseFlowerId();
       purchaseSpinner();
@@ -1009,6 +1101,12 @@ public class DashboardController implements Initializable {
   @Override
   public void initialize(URL arg0, ResourceBundle arg1) {
     displayUsername();
+    homeAF();
+    homeTI();
+    homeTC();
+
+    homeChart();
+
     // loading data in table view
     availableFlowersShowListData();
     availableFlowersStatus(); // loading Status in selection box

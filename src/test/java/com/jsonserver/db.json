@@ -1,0 +1,52 @@
+{
+    "login" : [
+    {"username" : "admin", "password" : "admin123"},
+    {"username" : "root", "password" : "password"}
+    ],
+    
+    "FlowersData" : [
+    {
+            "flowerId": 2,
+            "flowerName": "Lily",
+            "status": "Out of Stock",
+            "price": 10.0,
+            "date": "03-12-2023",
+            "image": "Path to image"
+        },
+        {
+            "flowerId": 3,
+            "flowerName": "sunFlower",
+            "status": "Out of Stock",
+            "price": 12.0,
+            "date": "03-12-2023",
+            "image": "Path to image"
+        },
+        {
+            "flowerId": 4,
+            "flowerName": "gasunFlower",
+            "status": "In Stock",
+            "price": 12.0,
+            "date": "03-12-2023",
+            "image": "Path to image"
+        }
+    ],
+    
+    "CustomerData" : [
+        {
+            "customerId": 1,
+            "flowerId": 1,
+            "flowerName": "Rose",
+            "quantity": 10,
+            "price": 100.0,
+            "date": "12-12-2012"
+        }
+    ],
+    
+    "CustomerInfo" : [
+        {
+            "customerId" : 1,
+            "total" : 1,
+            "date": "12-12-2012"
+        }
+    ]
+}
