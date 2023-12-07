@@ -14,8 +14,10 @@ public class JsonLoaderV2<T> {
     private final Class<T> elementType;
     private List<T> entityList;
 
+    // Constructor
     public JsonLoaderV2(String jsonFile_Path, Class<T> elementType) {
         DB_FILE_PATH = jsonFile_Path;
+
         this.elementType = elementType;
         this.entityList = loadDatabase();
     }

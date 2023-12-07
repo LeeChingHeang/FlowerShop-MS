@@ -1,1 +1,58 @@
-[{"customerId":1,"flowerId":1,"flowerName":"Rose","quantity":1,"price":5.0,"date":"07-12-2023"},{"customerId":1,"flowerId":1,"flowerName":"Rose","quantity":1,"price":5.0,"date":"07-12-2023"},{"customerId":2,"flowerId":3,"flowerName":"Lily","quantity":1,"price":6.0,"date":"07-12-2023"},{"customerId":2,"flowerId":8,"flowerName":"Hydrangea","quantity":5,"price":35.0,"date":"07-12-2023"},{"customerId":3,"flowerId":3,"flowerName":"Lily","quantity":1,"price":6.0,"date":"07-12-2023"},{"customerId":4,"flowerId":3,"flowerName":"Lily","quantity":1,"price":6.0,"date":"07-12-2023"}]
+[
+    {
+        "customerId": 1,
+        "flowerId": 1,
+        "flowerName": "Rose",
+        "quantity": 1,
+        "price": 5.0,
+        "date": "07-12-2023"
+    },
+    {
+        "customerId": 1,
+        "flowerId": 1,
+        "flowerName": "Rose",
+        "quantity": 1,
+        "price": 5.0,
+        "date": "07-12-2023"
+    },
+    {
+        "customerId": 2,
+        "flowerId": 3,
+        "flowerName": "Lily",
+        "quantity": 1,
+        "price": 6.0,
+        "date": "07-12-2023"
+    },
+    {
+        "customerId": 2,
+        "flowerId": 8,
+        "flowerName": "Hydrangea",
+        "quantity": 5,
+        "price": 35.0,
+        "date": "07-12-2023"
+    },
+    {
+        "customerId": 3,
+        "flowerId": 3,
+        "flowerName": "Lily",
+        "quantity": 1,
+        "price": 6.0,
+        "date": "07-12-2023"
+    },
+    {
+        "customerId": 4,
+        "flowerId": 3,
+        "flowerName": "Lily",
+        "quantity": 1,
+        "price": 6.0,
+        "date": "07-12-2023"
+    },
+    {
+        "customerId": 5,
+        "flowerId": 6,
+        "flowerName": "Orchid",
+        "quantity": 4,
+        "price": 36.0,
+        "date": "07-12-2023"
+    }
+]

@@ -1,1 +1,162 @@
-[{"flowerId":1,"flowerName":"Rose","status":"In Stock","price":5.0,"date":"07-12-2023","image":null},{"flowerId":2,"flowerName":"Tulip","status":"Out of Stock","price":7.5,"date":"07-12-2023","image":null},{"flowerId":3,"flowerName":"Lily","status":"In Stock","price":6.0,"date":"07-12-2023","image":null},{"flowerId":4,"flowerName":"Sunflower","status":"In Stock","price":8.5,"date":"07-12-2023","image":null},{"flowerId":5,"flowerName":"Daisy","status":"In Stock","price":4.5,"date":"07-12-2023","image":null},{"flowerId":6,"flowerName":"Orchid","status":"In Stock","price":9.0,"date":"07-12-2023","image":null},{"flowerId":7,"flowerName":"Carnation","status":"In Stock","price":5.5,"date":"07-12-2023","image":null},{"flowerId":8,"flowerName":"Hydrangea","status":"In Stock","price":7.0,"date":"07-12-2023","image":null},{"flowerId":9,"flowerName":"Peony","status":"In Stock","price":8.0,"date":"07-12-2023","image":null},{"flowerId":10,"flowerName":"Daffodil","status":"In Stock","price":6.5,"date":"07-12-2023","image":null},{"flowerId":11,"flowerName":"Chrysanthemum","status":"Out of Stock","price":5.0,"date":"07-12-2023","image":null},{"flowerId":12,"flowerName":"Iris","status":"In Stock","price":6.5,"date":"07-12-2023","image":null},{"flowerId":13,"flowerName":"Cactus","status":"In Stock","price":3.0,"date":"07-12-2023","image":null},{"flowerId":14,"flowerName":"Magnolia","status":"In Stock","price":7.0,"date":"07-12-2023","image":null},{"flowerId":15,"flowerName":"Poppy","status":"In Stock","price":4.0,"date":"07-12-2023","image":null},{"flowerId":16,"flowerName":"Zinnia","status":"In Stock","price":5.5,"date":"07-12-2023","image":null},{"flowerId":17,"flowerName":"Amaryllis","status":"In Stock","price":6.0,"date":"07-12-2023","image":null},{"flowerId":18,"flowerName":"Bluebell","status":"In Stock","price":4.5,"date":"07-12-2023","image":null},{"flowerId":19,"flowerName":"Marigold","status":"In Stock","price":5.0,"date":"07-12-2023","image":null},{"flowerId":20,"flowerName":"Dahlia","status":"In Stock","price":7.5,"date":"07-12-2023","image":null}]
+[
+    {
+        "flowerId": 1,
+        "flowerName": "Rose",
+        "status": "Out of Stock",
+        "price": 5.0,
+        "date": "07-12-2023",
+        "image": null
+    },
+    {
+        "flowerId": 2,
+        "flowerName": "Tulip",
+        "status": "Out of Stock",
+        "price": 7.5,
+        "date": "07-12-2023",
+        "image": null
+    },
+    {
+        "flowerId": 3,
+        "flowerName": "Lily",
+        "status": "In Stock",
+        "price": 6.0,
+        "date": "07-12-2023",
+        "image": null
+    },
+    {
+        "flowerId": 4,
+        "flowerName": "Sunflower",
+        "status": "In Stock",
+        "price": 8.5,
+        "date": "07-12-2023",
+        "image": null
+    },
+    {
+        "flowerId": 5,
+        "flowerName": "Daisy",
+        "status": "In Stock",
+        "price": 4.5,
+        "date": "07-12-2023",
+        "image": null
+    },
+    {
+        "flowerId": 6,
+        "flowerName": "Orchid",
+        "status": "In Stock",
+        "price": 9.0,
+        "date": "07-12-2023",
+        "image": null
+    },
+    {
+        "flowerId": 7,
+        "flowerName": "Carnation",
+        "status": "In Stock",
+        "price": 5.5,
+        "date": "07-12-2023",
+        "image": null
+    },
+    {
+        "flowerId": 8,
+        "flowerName": "Hydrangea",
+        "status": "In Stock",
+        "price": 7.0,
+        "date": "07-12-2023",
+        "image": null
+    },
+    {
+        "flowerId": 9,
+        "flowerName": "Peony",
+        "status": "In Stock",
+        "price": 8.0,
+        "date": "07-12-2023",
+        "image": null
+    },
+    {
+        "flowerId": 10,
+        "flowerName": "Daffodil",
+        "status": "In Stock",
+        "price": 6.5,
+        "date": "07-12-2023",
+        "image": null
+    },
+    {
+        "flowerId": 11,
+        "flowerName": "Chrysanthemum",
+        "status": "Out of Stock",
+        "price": 5.0,
+        "date": "07-12-2023",
+        "image": null
+    },
+    {
+        "flowerId": 12,
+        "flowerName": "Iris",
+        "status": "In Stock",
+        "price": 6.5,
+        "date": "07-12-2023",
+        "image": null
+    },
+    {
+        "flowerId": 13,
+        "flowerName": "Cactus",
+        "status": "In Stock",
+        "price": 3.0,
+        "date": "07-12-2023",
+        "image": null
+    },
+    {
+        "flowerId": 14,
+        "flowerName": "Magnolia",
+        "status": "In Stock",
+        "price": 7.0,
+        "date": "07-12-2023",
+        "image": null
+    },
+    {
+        "flowerId": 15,
+        "flowerName": "Poppy",
+        "status": "In Stock",
+        "price": 4.0,
+        "date": "07-12-2023",
+        "image": null
+    },
+    {
+        "flowerId": 16,
+        "flowerName": "Zinnia",
+        "status": "In Stock",
+        "price": 5.5,
+        "date": "07-12-2023",
+        "image": null
+    },
+    {
+        "flowerId": 17,
+        "flowerName": "Amaryllis",
+        "status": "In Stock",
+        "price": 6.0,
+        "date": "07-12-2023",
+        "image": null
+    },
+    {
+        "flowerId": 18,
+        "flowerName": "Bluebell",
+        "status": "In Stock",
+        "price": 4.5,
+        "date": "07-12-2023",
+        "image": null
+    },
+    {
+        "flowerId": 19,
+        "flowerName": "Marigold",
+        "status": "In Stock",
+        "price": 5.0,
+        "date": "07-12-2023",
+        "image": null
+    },
+    {
+        "flowerId": 20,
+        "flowerName": "Dahlia",
+        "status": "In Stock",
+        "price": 7.5,
+        "date": "07-12-2023",
+        "image": null
+    }
+]
