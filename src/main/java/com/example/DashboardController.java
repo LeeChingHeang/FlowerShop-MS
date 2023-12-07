@@ -177,29 +177,29 @@ public class DashboardController implements Initializable {
     // now we just need to add "_btn" to the prefix to set the button id
     String btnIdToShow = prefix[0] + "_btn";
     // make change to button that interact with the form
-    // since the button is locate on main_form so we need to get the button id from it which is .fxml id=(#buttonId)
+    // since the button is locate on main_form so we need to get the button id from
+    // it which is .fxml id=(#buttonId)
     // main_form
     Button selectBtn = (Button) main_form.lookup("#" + btnIdToShow); // lookup() method is used to find the node
     // with the specified CSS selector.
 
     for (Button btn : new Button[] {
-      home_btn,
-      availableFlowers_btn,
-      purchase_btn,
+        home_btn,
+        availableFlowers_btn,
+        purchase_btn,
     }) {
       btn.setStyle("-fx-background-color: transparent");
     }
 
     for (AnchorPane form : new AnchorPane[] {
-      home_form,
-      availableFlowers_form,
-      purchase_form,
+        home_form,
+        availableFlowers_form,
+        purchase_form,
     }) {
       form.setVisible(false);
     }
     selectBtn.setStyle(
-      "-fx-background-color: linear-gradient(to bottom right, #d3133d, #a4262f)"
-    );
+        "-fx-background-color: linear-gradient(to bottom right, #d3133d, #a4262f)");
     clickForm.setVisible(true);
     // showButtStyle(selectBtn);
   }
@@ -238,19 +238,18 @@ public class DashboardController implements Initializable {
   public void homeAF() {
     // loading flowersDb form json file to get data of inStock status Flowers
     JsonLoaderV2<FlowersData> flowersDb = new JsonLoaderV2<>(
-      "src/main/resources/com/example/data/stock/FlowersDb.json",
-      FlowersData.class
-    );
+        "src/main/resources/com/example/data/stock/FlowersDb.json",
+        FlowersData.class);
 
     try {
       List<FlowersData> loadedData = flowersDb.getEntityList();
       // filter only status "In Stock"
       List<FlowersData> inStock = loadedData
-        .stream()
-        // Filter
-        .filter(flower -> flower.getStatus().equals("In Stock"))
-        // push data to list
-        .collect(Collectors.toList());
+          .stream()
+          // Filter
+          .filter(flower -> flower.getStatus().equals("In Stock"))
+          // push data to list
+          .collect(Collectors.toList());
       // count total inStock
       int totalInStock = inStock.size();
       // display total inStock
@@ -261,11 +260,11 @@ public class DashboardController implements Initializable {
   }
 
   public void homeTC() {
-    // loading Customer_info form json file which is store the record the number of customer which have been purchase flowers in total
+    // loading Customer_info form json file which is store the record the number of
+    // customer which have been purchase flowers in total
     JsonLoaderV2<CustomerInfo> customer_info = new JsonLoaderV2<>(
-      "src/main/resources/com/example/data/purchase/Customer_info.json",
-      CustomerInfo.class
-    );
+        "src/main/resources/com/example/data/purchase/Customer_info.json",
+        CustomerInfo.class);
     try {
       List<CustomerInfo> loadedData = customer_info.getEntityList();
       // count total customer
@@ -278,11 +277,11 @@ public class DashboardController implements Initializable {
   }
 
   public void homeTI() {
-    // loading Customer_info form json file which is store the record the number of customer which have been purchase flowers in total
+    // loading Customer_info form json file which is store the record the number of
+    // customer which have been purchase flowers in total
     JsonLoaderV2<CustomerInfo> customer_info = new JsonLoaderV2<>(
-      "src/main/resources/com/example/data/purchase/Customer_info.json",
-      CustomerInfo.class
-    );
+        "src/main/resources/com/example/data/purchase/Customer_info.json",
+        CustomerInfo.class);
     try {
       List<CustomerInfo> loadedData = customer_info.getEntityList();
       // count total income
@@ -299,22 +298,22 @@ public class DashboardController implements Initializable {
 
   public void homeChart() {
     home_chart.getData().clear();
-    // loading Customer_info form json file which is store the record the number of customer which have been purchase flowers in total
+    // loading Customer_info form json file which is store the record the number of
+    // customer which have been purchase flowers in total
     JsonLoaderV2<CustomerInfo> customer_info = new JsonLoaderV2<>(
-      "src/main/resources/com/example/data/purchase/Customer_info.json",
-      CustomerInfo.class
-    );
+        "src/main/resources/com/example/data/purchase/Customer_info.json",
+        CustomerInfo.class);
     try {
       XYChart.Series chart = new XYChart.Series();
 
       List<CustomerInfo> loadedData = customer_info.getEntityList();
       loadedData
-        .stream()
-        .forEach(customer -> {
-          chart
-            .getData()
-            .add(new XYChart.Data(customer.getDate(), customer.getTotal()));
-        });
+          .stream()
+          .forEach(customer -> {
+            chart
+                .getData()
+                .add(new XYChart.Data(customer.getDate(), customer.getTotal()));
+          });
       home_chart.getData().add(chart);
     } catch (Exception e) {
       e.printStackTrace();
@@ -333,17 +332,14 @@ public class DashboardController implements Initializable {
     String image_path = getData.imagePath;
     // loading flowersDb form json file
     JsonLoaderV2<FlowersData> flowersDb = new JsonLoaderV2<>(
-      "src/main/resources/com/example/data/stock/FlowersDb.json",
-      FlowersData.class
-    );
+        "src/main/resources/com/example/data/stock/FlowersDb.json",
+        FlowersData.class);
     try {
       Alert alert;
-      if (
-        flowerId.isEmpty() ||
-        flowerName.isEmpty() ||
-        price.isEmpty() ||
-        image_path == ""
-      ) {
+      if (flowerId.isEmpty() ||
+          flowerName.isEmpty() ||
+          price.isEmpty() ||
+          image_path == "") {
         alert = new Alert(Alert.AlertType.ERROR);
         alert.setTitle("Error Message");
         alert.setHeaderText(null);
@@ -354,8 +350,7 @@ public class DashboardController implements Initializable {
         alert.setTitle("Confirmation Message");
         alert.setHeaderText(null);
         alert.setContentText(
-          "Are you sure you want to DELETE Flower ID: " + flowerId + " ?"
-        );
+            "Are you sure you want to DELETE Flower ID: " + flowerId + " ?");
         Optional<ButtonType> option = alert.showAndWait();
 
         if (option.get().equals(ButtonType.OK)) {
@@ -387,24 +382,21 @@ public class DashboardController implements Initializable {
     String flowerId = availableFlowers_flowerID.getText();
     String flowerName = availableFlowers_flowerName.getText();
     String status = (String) availableFlowers_status
-      .getSelectionModel()
-      .getSelectedItem();
+        .getSelectionModel()
+        .getSelectedItem();
     String price = availableFlowers_price.getText();
     String image_path = getData.imagePath;
     // loading flowersDb form json file
     JsonLoaderV2<FlowersData> flowersDb = new JsonLoaderV2<>(
-      "src/main/resources/com/example/data/stock/FlowersDb.json",
-      FlowersData.class
-    );
+        "src/main/resources/com/example/data/stock/FlowersDb.json",
+        FlowersData.class);
     try {
       Alert alert;
-      if (
-        flowerId.isEmpty() ||
-        flowerName.isEmpty() ||
-        status == null ||
-        price.isEmpty() ||
-        image_path == ""
-      ) {
+      if (flowerId.isEmpty() ||
+          flowerName.isEmpty() ||
+          status == null ||
+          price.isEmpty() ||
+          image_path == "") {
         alert = new Alert(Alert.AlertType.ERROR);
         alert.setTitle("Error Message");
         alert.setHeaderText(null);
@@ -415,25 +407,22 @@ public class DashboardController implements Initializable {
         alert.setTitle("Confirmation Message");
         alert.setHeaderText(null);
         alert.setContentText(
-          "Are you sure you want to UPDATE Flower ID: " + flowerId + " ?"
-        );
+            "Are you sure you want to UPDATE Flower ID: " + flowerId + " ?");
         Optional<ButtonType> option = alert.showAndWait();
 
         if (option.get().equals(ButtonType.OK)) {
           // update data
           LocalDate date = LocalDate.now();
           DateTimeFormatter formatter = DateTimeFormatter.ofPattern(
-            "dd-MM-yyyy"
-          );
+              "dd-MM-yyyy");
 
           FlowersData updateFlower = new FlowersData(
-            Integer.parseInt(flowerId),
-            flowerName,
-            status,
-            Double.parseDouble(price),
-            date.format(formatter),
-            image_path
-          );
+              Integer.parseInt(flowerId),
+              flowerName,
+              status,
+              Double.parseDouble(price),
+              date.format(formatter),
+              image_path);
           flowersDb.updateEntity(updateFlower, "flowerId", flowerId);
           availableFlowersListData();
           availableFlowersClear();
@@ -458,15 +447,15 @@ public class DashboardController implements Initializable {
   // onSelect table element show info
   public void availableFlowerSelect() {
     FlowersData selectedFlower = availableFlowers_tableView
-      .getSelectionModel()
-      .getSelectedItem();
+        .getSelectionModel()
+        .getSelectedItem();
     int num = availableFlowers_tableView.getSelectionModel().getSelectedIndex();
 
-    if ((num - 1) < -1) return;
+    if ((num - 1) < -1)
+      return;
 
     availableFlowers_flowerID.setText(
-      String.valueOf(selectedFlower.getFlowerId())
-    );
+        String.valueOf(selectedFlower.getFlowerId()));
     availableFlowers_flowerName.setText(selectedFlower.getFlowerName());
     availableFlowers_price.setText(String.valueOf(selectedFlower.getPrice()));
 
@@ -507,27 +496,24 @@ public class DashboardController implements Initializable {
     String flowerId = availableFlowers_flowerID.getText();
     String flowerName = availableFlowers_flowerName.getText();
     String status = (String) availableFlowers_status
-      .getSelectionModel()
-      .getSelectedItem();
+        .getSelectionModel()
+        .getSelectedItem();
     String price = availableFlowers_price.getText();
     String image_path = getData.imagePath;
 
     // formate json data to java object
     // just call JsonDatabaseV2 to fetch data from db_path
     JsonLoaderV2<FlowersData> flowersDb = new JsonLoaderV2<>(
-      "src/main/resources/com/example/data/stock/FlowersDb.json",
-      FlowersData.class
-    );
+        "src/main/resources/com/example/data/stock/FlowersDb.json",
+        FlowersData.class);
     try {
       Alert alert;
       // check if input is empty
-      if (
-        flowerId.isEmpty() ||
-        flowerName.isEmpty() ||
-        status == null ||
-        price.isEmpty() ||
-        image_path == ""
-      ) {
+      if (flowerId.isEmpty() ||
+          flowerName.isEmpty() ||
+          status == null ||
+          price.isEmpty() ||
+          image_path == "") {
         alert = new Alert(Alert.AlertType.ERROR);
         alert.setTitle("Error Message");
         alert.setHeaderText(null);
@@ -540,24 +526,21 @@ public class DashboardController implements Initializable {
           alert.setTitle("Error Message");
           alert.setHeaderText(null);
           alert.setContentText(
-            "Flower ID: " + flowerId + " was already exists!"
-          );
+              "Flower ID: " + flowerId + " was already exists!");
           alert.showAndWait();
         } else {
           // since cannot get date from datepicker so we need to get it from java
           LocalDate date = LocalDate.now();
           DateTimeFormatter formatter = DateTimeFormatter.ofPattern(
-            "dd-MM-yyyy"
-          );
+              "dd-MM-yyyy");
           // push data to db
           FlowersData newFlower = new FlowersData(
-            Integer.parseInt(flowerId),
-            flowerName,
-            status,
-            Double.parseDouble(price),
-            date.format(formatter),
-            image_path
-          );
+              Integer.parseInt(flowerId),
+              flowerName,
+              status,
+              Double.parseDouble(price),
+              date.format(formatter),
+              image_path);
           flowersDb.addEntity(newFlower);
 
           // Refresh table view or repopulate table view
@@ -584,8 +567,8 @@ public class DashboardController implements Initializable {
     FileChooser open = new FileChooser();
     open.setTitle("Open Image File");
     open
-      .getExtensionFilters()
-      .add(new FileChooser.ExtensionFilter("Image Files", "*.png", "*.jpg"));
+        .getExtensionFilters()
+        .add(new FileChooser.ExtensionFilter("Image Files", "*.png", "*.jpg"));
 
     File file = open.showOpenDialog(main_form.getScene().getWindow());
 
@@ -602,9 +585,8 @@ public class DashboardController implements Initializable {
     try {
       // formate json data to java object
       JsonLoaderV2<FlowersData> flowersDb = new JsonLoaderV2<>(
-        "src/main/resources/com/example/data/stock/FlowersDb.json",
-        FlowersData.class
-      );
+          "src/main/resources/com/example/data/stock/FlowersDb.json",
+          FlowersData.class);
       // store data to list then push it to observable list
       List<FlowersData> loadedData = flowersDb.getEntityList();
       // List<FlowersData> loadedData = new GetFlowersData().getFlowersList();
@@ -627,17 +609,13 @@ public class DashboardController implements Initializable {
     // System.out.println(availableFlowersList.getClass());
     Platform.runLater(() -> {
       availableFlowers_col_flowerID.setCellValueFactory(
-        new PropertyValueFactory<>("flowerId")
-      );
+          new PropertyValueFactory<>("flowerId"));
       availableFlowers_col_flowerName.setCellValueFactory(
-        new PropertyValueFactory<>("flowerName")
-      );
+          new PropertyValueFactory<>("flowerName"));
       availableFlowers_col_status.setCellValueFactory(
-        new PropertyValueFactory<>("status")
-      );
+          new PropertyValueFactory<>("status"));
       availableFlowers_col_price.setCellValueFactory(
-        new PropertyValueFactory<>("price")
-      );
+          new PropertyValueFactory<>("price"));
 
       availableFlowers_tableView.setItems(availableFlowersList);
     });
@@ -646,45 +624,43 @@ public class DashboardController implements Initializable {
   // Search Data in Table
   public void availableFlowersSearch() {
     FilteredList<FlowersData> filteredData = new FilteredList<>(
-      availableFlowersList,
-      e -> true
-    );
+        availableFlowersList,
+        e -> true);
 
     availableFlowers_search
-      .textProperty()
-      .addListener((observableValue, oldValue, newValue) -> {
-        filteredData.setPredicate(flowerData -> {
-          if (newValue == null || newValue.trim().isEmpty()) {
-            return true; // Display all records if the search value is empty
-          }
+        .textProperty()
+        .addListener((observableValue, oldValue, newValue) -> {
+          filteredData.setPredicate(flowerData -> {
+            if (newValue == null || newValue.trim().isEmpty()) {
+              return true; // Display all records if the search value is empty
+            }
 
-          String searchKey = newValue.toLowerCase();
+            String searchKey = newValue.toLowerCase();
 
-          // Perform case-insensitive comparisons
-          // return the matched data
-          return (
-            flowerData
-              .getFlowerId()
-              .toString()
-              .toLowerCase()
-              .contains(searchKey) ||
-            flowerData.getFlowerName().toLowerCase().contains(searchKey) ||
-            flowerData
-              .getPrice()
-              .toString()
-              .toLowerCase()
-              .contains(searchKey) ||
-            flowerData.getStatus().toLowerCase().contains(searchKey)
-          );
+            // Perform case-insensitive comparisons
+            // return the matched data
+            return (flowerData
+                .getFlowerId()
+                .toString()
+                .toLowerCase()
+                .contains(searchKey) ||
+                flowerData.getFlowerName().toLowerCase().contains(searchKey) ||
+                flowerData
+                    .getPrice()
+                    .toString()
+                    .toLowerCase()
+                    .contains(searchKey)
+                ||
+                flowerData.getStatus().toLowerCase().contains(searchKey));
+          });
+          // it constantly check if the search field is empty or not
+          // Use the existing SortedList if available, otherwise create a new one
+          SortedList<FlowersData> sortedData = new SortedList<>(filteredData);
+          sortedData
+              .comparatorProperty()
+              .bind(availableFlowers_tableView.comparatorProperty());
+          availableFlowers_tableView.setItems(sortedData);
         });
-        // it constantly check if the search field is empty or not
-        // Use the existing SortedList if available, otherwise create a new one
-        SortedList<FlowersData> sortedData = new SortedList<>(filteredData);
-        sortedData
-          .comparatorProperty()
-          .bind(availableFlowers_tableView.comparatorProperty());
-        availableFlowers_tableView.setItems(sortedData);
-      });
   }
 
   //// Purchase Form
@@ -693,29 +669,26 @@ public class DashboardController implements Initializable {
     purchaseCustomerId();
     //
     int flowerId = (int) purchase_flowerID
-      .getSelectionModel()
-      .getSelectedItem();
+        .getSelectionModel()
+        .getSelectedItem();
     String flowerName = (String) purchase_flowerName
-      .getSelectionModel()
-      .getSelectedItem();
+        .getSelectionModel()
+        .getSelectedItem();
     int qty = purchase_quantity.getValue();
-    // loading Customer_info form json file which is store the record the number of customer which have been purchase flowers in total
+    // loading Customer_info form json file which is store the record the number of
+    // customer which have been purchase flowers in total
     JsonLoaderV2<CustomerData> purchaseDb = new JsonLoaderV2<>(
-      "src/main/resources/com/example/data/purchase/CustomerDb.json",
-      CustomerData.class
-    );
+        "src/main/resources/com/example/data/purchase/CustomerDb.json",
+        CustomerData.class);
     JsonLoaderV2<FlowersData> flowersDb = new JsonLoaderV2<>(
-      "src/main/resources/com/example/data/stock/FlowersDb.json",
-      FlowersData.class
-    );
+        "src/main/resources/com/example/data/stock/FlowersDb.json",
+        FlowersData.class);
     try {
       Alert alert;
 
-      if (
-        purchase_flowerID.getSelectionModel().getSelectedItem() == null ||
-        purchase_flowerName.getSelectionModel().getSelectedItem() == null ||
-        qty == 0
-      ) {
+      if (purchase_flowerID.getSelectionModel().getSelectedItem() == null ||
+          purchase_flowerName.getSelectionModel().getSelectedItem() == null ||
+          qty == 0) {
         alert = new Alert(AlertType.ERROR);
         alert.setTitle("Error Message");
         alert.setHeaderText(null);
@@ -726,13 +699,14 @@ public class DashboardController implements Initializable {
         double priceData = 0.0;
         // query price flowerName for checkPrice
         String checkPrice = (String) purchase_flowerName
-          .getSelectionModel()
-          .getSelectedItem();
+            .getSelectionModel()
+            .getSelectedItem();
         // flowersDb.getEntityList().stream()
-        //     .filter(flower -> flower.getFlowerName().equals(checkPrice)).collect(Collectors.toList())
-        //     .forEach(flower -> {
-        //         priceData[0] = flower.getPrice();
-        //     });
+        // .filter(flower ->
+        // flower.getFlowerName().equals(checkPrice)).collect(Collectors.toList())
+        // .forEach(flower -> {
+        // priceData[0] = flower.getPrice();
+        // });
         for (FlowersData flower : flowersDb.getEntityList()) {
           if (flower.getFlowerName().equals(checkPrice)) {
             priceData = flower.getPrice();
@@ -744,13 +718,12 @@ public class DashboardController implements Initializable {
         LocalDate date = LocalDate.now();
         DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd-MM-yyyy");
         CustomerData newCustomer = new CustomerData(
-          customerId,
-          flowerId,
-          flowerName,
-          qty,
-          total,
-          date.format(formatter)
-        );
+            customerId,
+            flowerId,
+            flowerName,
+            qty,
+            total,
+            date.format(formatter));
         purchaseDb.addEntity(newCustomer);
 
         purchaseShowListData();
@@ -762,11 +735,11 @@ public class DashboardController implements Initializable {
   }
 
   public void purchasePay() {
-    // loading Customer_info form json file which is store the record the number of customer which have been purchase flowers in total
+    // loading Customer_info form json file which is store the record the number of
+    // customer which have been purchase flowers in total
     JsonLoaderV2<CustomerInfo> customer_info = new JsonLoaderV2<>(
-      "src/main/resources/com/example/data/purchase/Customer_info.json",
-      CustomerInfo.class
-    );
+        "src/main/resources/com/example/data/purchase/Customer_info.json",
+        CustomerInfo.class);
     try {
       Alert alert;
       if (totalPrice == 0.0) {
@@ -787,13 +760,11 @@ public class DashboardController implements Initializable {
           // push data to Customer_info
           LocalDate date = LocalDate.now();
           DateTimeFormatter formatter = DateTimeFormatter.ofPattern(
-            "dd-MM-yyyy"
-          );
+              "dd-MM-yyyy");
           CustomerInfo newCustomer = new CustomerInfo(
-            customerId,
-            totalPrice,
-            date.format(formatter)
-          );
+              customerId,
+              totalPrice,
+              date.format(formatter));
           customer_info.addEntity(newCustomer);
           // clear data in table
           purchaseShowListData();
@@ -822,9 +793,8 @@ public class DashboardController implements Initializable {
     purchaseCustomerId();
     // loading CustomerDb form json file
     JsonLoaderV2<CustomerData> purchaseDb = new JsonLoaderV2<>(
-      "src/main/resources/com/example/data/purchase/CustomerDb.json",
-      CustomerData.class
-    );
+        "src/main/resources/com/example/data/purchase/CustomerDb.json",
+        CustomerData.class);
 
     try {
       List<CustomerData> loadedData = purchaseDb.getEntityList();
@@ -843,9 +813,9 @@ public class DashboardController implements Initializable {
   public void purchaseClear() {
     purchase_flowerID.setPromptText("Choose...");
     purchase_flowerName.setPromptText("Choose...");
-    purchase_flowerID.getSelectionModel().clearSelection(); //  clear it to avoid error
+    purchase_flowerID.getSelectionModel().clearSelection(); // clear it to avoid error
     purchase_flowerID.setValue(null);
-    purchase_flowerName.getSelectionModel().clearSelection(); //  clear it to avoid error
+    purchase_flowerName.getSelectionModel().clearSelection(); // clear it to avoid error
     purchase_flowerName.setValue(null);
     purchase_quantity.getValueFactory().setValue(1);
     purchase_total.setText("$0.0");
@@ -854,9 +824,8 @@ public class DashboardController implements Initializable {
   public void purchaseFlowerId() {
     // loading FlowersData form flowersDb json file
     JsonLoaderV2<FlowersData> flowersDb = new JsonLoaderV2<>(
-      "src/main/resources/com/example/data/stock/FlowersDb.json",
-      FlowersData.class
-    );
+        "src/main/resources/com/example/data/stock/FlowersDb.json",
+        FlowersData.class);
     // load filter only status "In Stock"
     List<FlowersData> loadedData = flowersDb.getEntityList();
     // filter only status "In Stock"
@@ -865,21 +834,20 @@ public class DashboardController implements Initializable {
       // push data to table via observable list
       // filter only flowerId with status "In Stock"
       loadedData
-        .stream()
-        .filter(flower -> flower.getStatus().equals("In Stock"))
-        .collect(Collectors.toList())
-        .forEach(flower -> {
-          listData.add(flower.getFlowerId());
-        });
+          .stream()
+          .filter(flower -> flower.getStatus().equals("In Stock"))
+          .collect(Collectors.toList())
+          .forEach(flower -> {
+            listData.add(flower.getFlowerId());
+          });
       purchase_flowerID.setItems(listData);
 
       purchase_flowerName.setPromptText("Choose...");
-      purchase_flowerName.getSelectionModel().clearSelection(); //  clear it to avoid error
+      purchase_flowerName.getSelectionModel().clearSelection(); // clear it to avoid error
       purchase_flowerName.setValue(null);
       // set flag to avoid error when flowerId of selection not selected which is null
-      if (
-        purchase_flowerID.getSelectionModel().getSelectedItem() != null
-      ) purchaseFlowerName();
+      if (purchase_flowerID.getSelectionModel().getSelectedItem() != null)
+        purchaseFlowerName();
       // purchase_flowerID.getSelectionModel().selectFirst();
     } catch (Exception e) {
       e.printStackTrace();
@@ -889,27 +857,26 @@ public class DashboardController implements Initializable {
   public void purchaseFlowerName() {
     // loading FlowersData form flowersDb json file
     JsonLoaderV2<FlowersData> flowersDb = new JsonLoaderV2<>(
-      "src/main/resources/com/example/data/stock/FlowersDb.json",
-      FlowersData.class
-    );
+        "src/main/resources/com/example/data/stock/FlowersDb.json",
+        FlowersData.class);
     // load filter only status "In Stock"
     // List<FlowersData> loadedData = flowersDb.getEntityList();
     try {
       ObservableList listData = FXCollections.observableArrayList();
       // get flowerId form selection box
       int flowerId = (int) purchase_flowerID
-        .getSelectionModel()
-        .getSelectedItem();
+          .getSelectionModel()
+          .getSelectedItem();
       // push data to table via observable list
       // fetch FlowerName associated with flowerId
       flowersDb
-        .getEntityList()
-        .stream()
-        .filter(flower -> flower.getFlowerId() == flowerId)
-        .collect(Collectors.toList())
-        .forEach(flower -> {
-          listData.add(flower.getFlowerName());
-        });
+          .getEntityList()
+          .stream()
+          .filter(flower -> flower.getFlowerId() == flowerId)
+          .collect(Collectors.toList())
+          .forEach(flower -> {
+            listData.add(flower.getFlowerName());
+          });
       purchase_flowerName.setItems(listData);
     } catch (Exception e) {
       e.printStackTrace();
@@ -935,19 +902,18 @@ public class DashboardController implements Initializable {
     ObservableList<CustomerData> purchaseList = FXCollections.observableArrayList();
     // load data so we could use it to display in table view
     JsonLoaderV2<CustomerData> purchaseDb = new JsonLoaderV2<>(
-      "src/main/resources/com/example/data/purchase/CustomerDb.json",
-      CustomerData.class
-    );
+        "src/main/resources/com/example/data/purchase/CustomerDb.json",
+        CustomerData.class);
     try {
       List<CustomerData> loadedData = purchaseDb.getEntityList();
       // filter only if customerId is matched
       loadedData
-        .stream()
-        .filter(customer -> customer.getCustomerId() == customerId)
-        .collect(Collectors.toList())
-        .forEach(customer -> {
-          purchaseList.add(customer);
-        });
+          .stream()
+          .filter(customer -> customer.getCustomerId() == customerId)
+          .collect(Collectors.toList())
+          .forEach(customer -> {
+            purchaseList.add(customer);
+          });
     } catch (Exception e) {
       e.printStackTrace();
     }
@@ -962,17 +928,13 @@ public class DashboardController implements Initializable {
     purchaseList = purchaseListData();
     Platform.runLater(() -> {
       purchase_col_flowerID.setCellValueFactory(
-        new PropertyValueFactory<>("flowerId")
-      );
+          new PropertyValueFactory<>("flowerId"));
       purchase_col_flowerName.setCellValueFactory(
-        new PropertyValueFactory<>("flowerName")
-      );
+          new PropertyValueFactory<>("flowerName"));
       purchase_col_price.setCellValueFactory(
-        new PropertyValueFactory<>("price")
-      );
+          new PropertyValueFactory<>("price"));
       purchase_col_quantity.setCellValueFactory(
-        new PropertyValueFactory<>("quantity")
-      );
+          new PropertyValueFactory<>("quantity"));
 
       purchase_tableView.setItems(purchaseList);
     });
@@ -983,34 +945,40 @@ public class DashboardController implements Initializable {
   public void purchaseCustomerId() {
     try {
       // On purchase we will generate new customer id
-      // loading Customer_info form json file which is store the record the number of customer which have been purchase flowers in total
+      // loading Customer_info form json file which is store the record the number of
+      // customer which have been purchase flowers in total
       JsonLoaderV2<CustomerInfo> customer_info = new JsonLoaderV2<>(
-        "src/main/resources/com/example/data/purchase/Customer_info.json",
-        CustomerInfo.class
-      );
+          "src/main/resources/com/example/data/purchase/Customer_info.json",
+          CustomerInfo.class);
       // load the raw data to List
       List<CustomerInfo> customerList = customer_info.getEntityList();
       // fetch the last customer id
-      // check to see on Customer_info table is empty or not if empty then set id to 1 else increment id
+      // check to see on Customer_info table is empty or not if empty then set id to 1
+      // else increment id
       if (customerList.size() == 0) { // if our List is empty then set id to 1
         customerId = 1;
       } else {
-        customerId =
-          customerList.get(customerList.size() - 1).getCustomerId() + 1;
+        customerId = customerList.get(customerList.size() - 1).getCustomerId() + 1;
       }
-      /*  // get the last customerId from CustomerDb
-            JsonLoaderV2<CustomerData> customerDb = new JsonLoaderV2<>("src/main/resources/com/example/data/purchase/CustomerDb.json", CustomerData.class);
-            JsonLoaderV2<CustomerInfo> customer_info = new JsonLoaderV2<>(
-                    "src/main/resources/com/example/data/purchase/Customer_info.json", CustomerInfo.class);
-            List<CustomerData> customerList = customerDb.getEntityList();
-            List<CustomerInfo> customerInfoList = customer_info.getEntityList();
-
-            int countData = customerInfoList.get(customerInfoList.size() - 1).getCustomerId();
-            if(customerList.size()>0){
-                customerId = customerList.get(customerList.size() - 1).getCustomerId();
-            } else if(customerId == countData){
-                customerId = countData;
-            }  */
+      /*
+       * // get the last customerId from CustomerDb
+       * JsonLoaderV2<CustomerData> customerDb = new JsonLoaderV2<>(
+       * "src/main/resources/com/example/data/purchase/CustomerDb.json",
+       * CustomerData.class);
+       * JsonLoaderV2<CustomerInfo> customer_info = new JsonLoaderV2<>(
+       * "src/main/resources/com/example/data/purchase/Customer_info.json",
+       * CustomerInfo.class);
+       * List<CustomerData> customerList = customerDb.getEntityList();
+       * List<CustomerInfo> customerInfoList = customer_info.getEntityList();
+       * 
+       * int countData = customerInfoList.get(customerInfoList.size() -
+       * 1).getCustomerId();
+       * if(customerList.size()>0){
+       * customerId = customerList.get(customerList.size() - 1).getCustomerId();
+       * } else if(customerId == countData){
+       * customerId = countData;
+       * }
+       */
     } catch (Exception e) {
       e.printStackTrace();
     }
@@ -1055,7 +1023,7 @@ public class DashboardController implements Initializable {
 
     purchase_btn.setOnAction(e -> {
       justSwitch(purchase_form);
-        purchaseClear();
+      purchaseClear();
       purchaseShowListData();
       purchaseFlowerId();
       purchaseSpinner();
