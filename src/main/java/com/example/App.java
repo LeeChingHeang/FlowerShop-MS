@@ -35,19 +35,17 @@ public class App extends Application {
             x = event.getSceneX();
             y = event.getSceneY();
         });
-        // if dragged when mouse is pressed on root of scene it will move the window and set opacity to .8 
+
         root.setOnMouseDragged(event -> {
             stage.setX(event.getScreenX() - x);
             stage.setY(event.getScreenY() - y);
              /// Interaction with the window
-            // if dragged when mouse is pressed on root of scene it will move the window and set opacity to .8 
+            // if dragged on-pressed the root of scene it will move the scene and set opacity to .8 
             if("Login".equals(fxml))
                 stage.setOpacity(.8);
         });
         
-        root.setOnMouseReleased(event -> {
-            stage.setOpacity(1);
-        });
+        root.setOnMouseReleased(event -> stage.setOpacity(1));
         
         stage.setScene(scene);
         stage.initStyle(StageStyle.TRANSPARENT);

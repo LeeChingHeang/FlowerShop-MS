@@ -177,7 +177,7 @@ public class DashboardController implements Initializable {
     // now we just need to add "_btn" to the prefix to set the button id
     String btnIdToShow = prefix[0] + "_btn";
     // make change to button that interact with the form
-    // since the button is locate on main_form so we need to get the button id from
+    // since the button is located on main_form, so we need to get the button id from
     // it which is .fxml id=(#buttonId)
     // main_form
     Button selectBtn = (Button) main_form.lookup("#" + btnIdToShow); // lookup() method is used to find the node
@@ -326,7 +326,7 @@ public class DashboardController implements Initializable {
     // get data from text field
     String flowerId = availableFlowers_flowerID.getText();
     String flowerName = availableFlowers_flowerName.getText();
-    // String status =
+    // String status
     // (String)availableFlowers_status.getSelectionModel().getSelectedItem();
     String price = availableFlowers_price.getText();
     String image_path = getData.imagePath;
@@ -944,7 +944,7 @@ public class DashboardController implements Initializable {
 
   public void purchaseCustomerId() {
     try {
-      // On purchase we will generate new customer id
+      // On purchase, we will generate new customer id
       // loading Customer_info form json file which is store the record the number of
       // customer which have been purchase flowers in total
       JsonLoaderV2<CustomerInfo> customer_info = new JsonLoaderV2<>(
@@ -958,6 +958,7 @@ public class DashboardController implements Initializable {
       if (customerList.size() == 0) { // if our List is empty then set id to 1
         customerId = 1;
       } else {
+        // generate new customerId by increment the last customerId from Customer_info which record the number of customer which have been purchase flowers in total
         customerId = customerList.get(customerList.size() - 1).getCustomerId() + 1;
       }
       /*

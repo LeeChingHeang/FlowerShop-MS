@@ -40,14 +40,14 @@ public class LoginController implements Initializable{
        /*  // Just for debugging
         this.username.setText("admin");
         this.password.setText("admin123"); */
-        // calling our database api
+        // calling our GetUserData class to get user data from the database using the entered credentials
         
         GetUserData db = new GetUserData();
         String username = this.username.getText(); 
         String password = this.password.getText();
          
         Alert alert;
-        // check if username and password are empty
+        // check if username and password field is empty
         if(username.isEmpty() || password.isEmpty()) {
             alert = new Alert(Alert.AlertType.ERROR);
             alert.setTitle("Error Message");
@@ -66,16 +66,14 @@ public class LoginController implements Initializable{
             // more secure way to check if user is authenticated 
             if(db.authenticateUser(username, password).isPresent()) {
                 // IF user is authenticated
-                 
-                // // debug
                 alert = new Alert(Alert.AlertType.INFORMATION);
                 alert.setTitle("Success Message");
                 alert.setHeaderText(null);
                 alert.setContentText("You are logged in");
                 alert.showAndWait();
                 
-                // get username form textfield which we need to call this.username
-                getData.username = this.username.getText(); // since user are authenticated we can now get the username but not need to load it from database just get form textfield so faster loading
+                // get username from textField which we need to call this.username
+                getData.username = this.username.getText(); // since user already authenticated we just re-used inside the username-field no need so it make loading faster
                 // Hide the current window (login form)
                 // loginBtn.getScene().getWindow().hide();
                 

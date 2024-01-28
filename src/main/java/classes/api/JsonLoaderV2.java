@@ -82,6 +82,7 @@ private List<T> loadDatabase() {
     }
 
     try {
+        // Suggest the objects are instances of the default LinkedHashMap class
         return objectMapper.readValue(file, objectMapper.getTypeFactory().constructCollectionType(List.class, elementType));
     } catch (IOException e) {
         e.printStackTrace();
